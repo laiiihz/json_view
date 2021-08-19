@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:json_view/json_view.dart';
 import '.json_data.dart';
 
 void main() {
@@ -31,19 +32,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          Container(
-            height: 200,
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return Item(index: index, onTap: () {});
-              },
-              itemCount: 100,
-            ),
-          )
-        ],
-      ),
+      appBar: AppBar(),
+      body: JsonView(map: data),
     );
   }
 }

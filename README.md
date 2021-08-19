@@ -2,6 +2,15 @@
 
 A new Flutter package project.
 
+## Usage
+
+```dart
+Scaffold(
+    appBar: AppBar(),
+    body: JsonView(map: data),
+)
+```
+
 ## Getting Started
 
 This project is a starting point for a Dart

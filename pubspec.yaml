@@ -1,6 +1,6 @@
 name: json_view
 description: a simple json(Map) view. only depend on flutter.
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/laiiihz/json_view
 
 environment:

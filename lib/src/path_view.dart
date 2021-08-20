@@ -23,6 +23,7 @@ class _PathViewState extends State<PathView> {
   @override
   void initState() {
     super.initState();
+    JsonView.path.clear();
     JsonView.addListener(update);
   }
 

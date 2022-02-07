@@ -14,10 +14,11 @@ enum _ViewMode {
 
 class JsonView extends StatefulWidget {
   final dynamic json;
-  final EdgeInsets padding;
-  JsonView(
-      {Key? key, required this.json, this.padding = const EdgeInsets.all(8)})
-      : assert(json is Map || json is List),
+  JsonView({Key? key, required this.json})
+      : assert(
+          json is Map || json is List,
+          "not a valid Json map or Json List",
+        ),
         super(key: key);
 
   @override
@@ -27,7 +28,6 @@ class JsonView extends StatefulWidget {
 class _JsonViewState extends State<JsonView> {
   @override
   Widget build(BuildContext context) {
-    Widget _child = SizedBox.shrink();
     if (widget.json is Map) {
       return _MapView(
         json: widget.json,
@@ -35,10 +35,7 @@ class _JsonViewState extends State<JsonView> {
       );
     }
     if (widget.json is List) {
-      return _ListView(
-        json: widget.json,
-        mode: _ViewMode.list,
-      );
+      return _ListView(json: widget.json, mode: _ViewMode.list);
     }
 
     return SizedBox.shrink();

@@ -1,14 +1,11 @@
 # json_view
 
-A new Flutter package project.
+a simple json preview package that has a not bad performance. lazy load json tree node that cause less jank.
 
 ## Usage
 
 ```dart
-Scaffold(
-    appBar: AppBar(),
-    body: JsonView(map: data),
-)
+JsonView(map: data)
 ```
 
 ## Getting Started

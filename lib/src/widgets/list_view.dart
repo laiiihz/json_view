@@ -15,15 +15,9 @@ class __ListViewState extends State<_ListView> {
   @override
   Widget build(BuildContext context) {
     if (_ViewMode.list == widget.mode) {
-      return ListView.builder(
-        itemBuilder: (context, index) {
-          return _ListSingle(json: widget.json[index]);
-        },
-        itemCount: widget.json.length,
-      );
-    }
-    if (widget.json.length <= _maxSize) {
-      return _ListSingle(json: widget.json);
+      return _ListSingle(json: widget.json, mode: _ViewMode.list);
+    } else if (widget.json.length <= _maxSize) {
+      return _ListSingle(json: widget.json, mode: _ViewMode.column);
     } else {
       List<List> items = [];
       int maxLength = (widget.json.length / _maxSize).ceil();
@@ -47,6 +41,7 @@ class __ListViewState extends State<_ListView> {
             child: _ListSingle(
               json: items[index],
               startIndex: start,
+              mode: _ViewMode.column,
             ),
             short: '',
           );
@@ -59,29 +54,41 @@ class __ListViewState extends State<_ListView> {
 class _ListSingle extends StatelessWidget {
   final List json;
   final int startIndex;
-  const _ListSingle({Key? key, required this.json, this.startIndex = 0})
+  final _ViewMode mode;
+  const _ListSingle(
+      {Key? key, required this.json, this.startIndex = 0, required this.mode})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ColumnBuilder(
-      itemCount: json.length,
-      itemBuilder: (context, index) {
-        final item = json[index];
-        final current = index + startIndex;
-        if (item is bool || item is String || item is num || item == null) {
-          return JsonTile(title: '[$current]', value: item);
-        }
+    final IndexedWidgetBuilder indexedWidgetBuilder = (context, index) {
+      final item = json[index];
+      final current = index + startIndex;
+      if (item is bool || item is String || item is num || item == null) {
+        return JsonTile(title: '[$current]', value: item);
+      }
 
-        if (item is Map<dynamic, dynamic>) {
-          return BlockWrapper(
-            keyValue: '[$current]',
-            child: _MapView(json: item, mode: _ViewMode.column),
-            short: '',
-          );
-        }
-        return SizedBox.shrink();
-      },
-    );
+      if (item is Map<dynamic, dynamic>) {
+        return BlockWrapper(
+          keyValue: '[$current]',
+          child: _MapView(json: item, mode: _ViewMode.column),
+          short: '',
+        );
+      }
+      return SizedBox.shrink();
+    };
+    if (_ViewMode.column == mode) {
+      return ColumnBuilder(
+        itemCount: json.length,
+        itemBuilder: indexedWidgetBuilder,
+      );
+    }
+    if (_ViewMode.list == mode) {
+      return ListView.builder(
+        itemCount: json.length,
+        itemBuilder: indexedWidgetBuilder,
+      );
+    }
+    return SizedBox.shrink();
   }
 }

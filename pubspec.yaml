@@ -1,5 +1,5 @@
 name: json_view
-description: a simple json(Map) view. only depend on flutter.
+description: a simple json preview package that has a not bad performance. lazy load json tree node that cause less jank.
 version: 0.0.2
 homepage: https://github.com/laiiihz/json_view
 

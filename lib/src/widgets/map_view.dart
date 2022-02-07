@@ -3,6 +3,7 @@ part of '../json_view.dart';
 class _MapView extends StatefulWidget {
   final Map<dynamic, dynamic> json;
   final _ViewMode mode;
+
   const _MapView({Key? key, required this.json, required this.mode})
       : super(key: key);
 

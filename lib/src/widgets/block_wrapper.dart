@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:json_view/src/widgets/json_tile.dart';
 
 class BlockWrapper extends StatefulWidget {
   final String keyValue;
   final Widget child;
-  BlockWrapper({Key? key, required this.keyValue, required this.child})
+  final Type type;
+  BlockWrapper(
+      {Key? key,
+      required this.keyValue,
+      required this.child,
+      required this.type})
       : super(key: key);
 
   @override
@@ -12,12 +18,12 @@ class BlockWrapper extends StatefulWidget {
 
 class _BlockWrapperState extends State<BlockWrapper> {
   bool _showMore = false;
-  Widget _child = SizedBox(height: 48);
+  Widget _child = SizedBox(height: 24);
 
   void _open() {
     setState(() {
       _child = Padding(
-        padding: EdgeInsets.only(top: 48, left: 8),
+        padding: EdgeInsets.only(top: 24, left: 8),
         child: widget.child,
       );
     });
@@ -36,7 +42,7 @@ class _BlockWrapperState extends State<BlockWrapper> {
     Future.delayed(Duration(milliseconds: 500), () {
       if (mounted)
         setState(() {
-          _child = SizedBox(height: 48);
+          _child = SizedBox(height: 24);
         });
     });
   }
@@ -54,11 +60,7 @@ class _BlockWrapperState extends State<BlockWrapper> {
             heightFactor: _showMore ? 1 : 0,
           ),
         ),
-        ListTile(
-          dense: true,
-          leading: Icon(_showMore ? Icons.arrow_drop_down : Icons.arrow_right),
-          title: Text(widget.keyValue),
-          horizontalTitleGap: 0,
+        InkWell(
           onTap: () {
             if (!_showMore) {
               _open();
@@ -66,6 +68,13 @@ class _BlockWrapperState extends State<BlockWrapper> {
               _close();
             }
           },
+          child: JsonTile(
+            leading: Icon(_showMore
+                ? Icons.arrow_drop_down_rounded
+                : Icons.arrow_right_rounded),
+            title: widget.keyValue,
+            value: widget.type.toString(),
+          ),
         ),
       ],
     );

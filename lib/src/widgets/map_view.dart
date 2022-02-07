@@ -14,25 +14,21 @@ class __MapViewState extends State<_MapView> {
     return ColumnBuilder(
       itemBuilder: (context, index) {
         final item = widget.json.entries.toList()[index];
-        if (item.value is bool) {
-          return BooleanBlock(keyValue: item.key, value: item.value);
-        }
-        if (item.value is String) {
-          return StringBlock(keyValue: item.key, value: item.value);
-        }
-        if (item.value is num) {
-          return NumBlock(keyValue: item.key, value: item.value);
+        if (item.value is bool || item.value is String || item.value is num) {
+          return JsonTile(title: item.key, value: item.value);
         }
         if (item.value is List) {
           return BlockWrapper(
             keyValue: item.key,
             child: _ListView(json: item.value),
+            type: List,
           );
         }
         if (item.value is Map) {
           return BlockWrapper(
             keyValue: item.key,
             child: _MapView(json: item.value),
+            type: Map,
           );
         }
         return SizedBox.shrink();

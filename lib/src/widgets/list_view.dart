@@ -28,6 +28,7 @@ class __ListViewState extends State<_ListView> {
           return BlockWrapper(
             keyValue: '[$index]',
             child: _MapView(json: item),
+            type: Map,
           );
         }
         return SizedBox.shrink();

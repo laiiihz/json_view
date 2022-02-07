@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_view/src/widgets/block_wrapper.dart';
 import 'package:json_view/src/widgets/column_builder.dart';
+import 'package:json_view/src/widgets/json_tile.dart';
 
 part './widgets/map_view.dart';
 part './widgets/list_view.dart';

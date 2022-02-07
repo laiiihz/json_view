@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:json_view/json_view.dart';
 import '.json_data.dart';
@@ -13,7 +11,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'JsonView Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+      ),
       home: HomePage(),
     );
   }
@@ -28,12 +29,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int size = 100;
-  Map<String, dynamic> data = json.decode(jsonData);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: JsonView(map: data),
+      appBar: AppBar(title: const Text('JSON VIEW')),
+      body: JsonView(json: jsonData),
     );
   }
 }

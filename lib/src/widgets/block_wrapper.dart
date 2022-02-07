@@ -1,15 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:json_view/src/widgets/json_tile.dart';
 
 class BlockWrapper extends StatefulWidget {
   final String keyValue;
   final Widget child;
-  final Type type;
+  final String short;
   BlockWrapper(
       {Key? key,
       required this.keyValue,
       required this.child,
-      required this.type})
+      required this.short})
       : super(key: key);
 
   @override
@@ -17,6 +19,7 @@ class BlockWrapper extends StatefulWidget {
 }
 
 class _BlockWrapperState extends State<BlockWrapper> {
+  Timer? _timer;
   bool _showMore = false;
   Widget _child = SizedBox(height: 24);
 
@@ -27,7 +30,12 @@ class _BlockWrapperState extends State<BlockWrapper> {
         child: widget.child,
       );
     });
+
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      if (_timer != null) {
+        _timer!.cancel();
+        _timer = null;
+      }
       if (mounted)
         setState(() {
           _showMore = true;
@@ -38,13 +46,14 @@ class _BlockWrapperState extends State<BlockWrapper> {
   void _close() {
     _showMore = false;
     setState(() {});
-    // TODO when animation break
-    Future.delayed(Duration(milliseconds: 500), () {
-      if (mounted)
-        setState(() {
-          _child = SizedBox(height: 24);
-        });
-    });
+    if (_timer != null) {
+      _timer = Timer(Duration(milliseconds: 500), () {
+        if (mounted)
+          setState(() {
+            _child = SizedBox(height: 24);
+          });
+      });
+    }
   }
 
   @override
@@ -60,7 +69,12 @@ class _BlockWrapperState extends State<BlockWrapper> {
             heightFactor: _showMore ? 1 : 0,
           ),
         ),
-        InkWell(
+        JsonTile(
+          leading: Icon(_showMore
+              ? Icons.arrow_drop_down_rounded
+              : Icons.arrow_right_rounded),
+          title: widget.keyValue,
+          value: _showMore ? '' : widget.short,
           onTap: () {
             if (!_showMore) {
               _open();
@@ -68,13 +82,6 @@ class _BlockWrapperState extends State<BlockWrapper> {
               _close();
             }
           },
-          child: JsonTile(
-            leading: Icon(_showMore
-                ? Icons.arrow_drop_down_rounded
-                : Icons.arrow_right_rounded),
-            title: widget.keyValue,
-            value: widget.type.toString(),
-          ),
         ),
       ],
     );

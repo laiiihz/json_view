@@ -4,11 +4,13 @@ class JsonTile extends StatelessWidget {
   final String title;
   final dynamic value;
   final Widget? leading;
+  final VoidCallback? onTap;
   const JsonTile({
     Key? key,
     required this.title,
     required this.value,
     this.leading,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -20,17 +22,20 @@ class JsonTile extends StatelessWidget {
       valueColor = Colors.lightGreen;
     } else if (value is String) {
       valueColor = Colors.orange;
+    } else if (value == null) {
+      valueColor = Colors.blueGrey;
     }
     return Row(
       children: [
-        if (leading != null)
-          IconTheme(
-            child: leading!,
+        SizedBox(
+          width: 16,
+          child: IconTheme(
+            child: leading ?? SizedBox(),
             data: IconThemeData(color: Colors.grey),
           ),
-        if (leading != null) const SizedBox(width: 4),
+        ),
         Expanded(
-          child: Text.rich(
+          child: SelectableText.rich(
             TextSpan(
               children: [
                 TextSpan(text: title, style: TextStyle(color: Colors.grey)),
@@ -41,6 +46,7 @@ class JsonTile extends StatelessWidget {
                 ),
               ],
             ),
+            onTap: onTap,
           ),
         ),
       ],

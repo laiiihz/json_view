@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_view/json_view.dart';
-import '.json_data.dart';
+import 'json_data.dart';
 
 void main() {
   runApp(MyApp());

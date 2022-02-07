@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.0
+
+* refactor json view (no api changes)
+
 ## 0.0.2
 
 * fix path not update.

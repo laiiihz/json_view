@@ -14,7 +14,14 @@ const Map<String, dynamic> jsonData = {
         "3": "3",
         "4": [4, 5, 6, 7],
       },
-    }
+      "map2": {
+        "0x0": 1,
+      }
+    },
+    [
+      {'test': '123'},
+      {'test2': 12}
+    ],
   ],
   "emptyMap": {},
   "map": {"foo": "bar"},

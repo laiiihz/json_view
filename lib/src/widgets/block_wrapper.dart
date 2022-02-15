@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:json_view/src/widgets/animated_arrow.dart';
 import 'package:json_view/src/widgets/json_tile.dart';
 
 class BlockWrapper extends StatefulWidget {
@@ -70,9 +72,8 @@ class _BlockWrapperState extends State<BlockWrapper> {
           ),
         ),
         JsonTile(
-          leading: Icon(_showMore
-              ? Icons.arrow_drop_down_rounded
-              : Icons.arrow_right_rounded),
+          leading: AnimatedArrow(
+              isFold: _showMore, duration: Duration(milliseconds: 600)),
           title: widget.keyValue,
           value: _showMore ? '' : widget.short,
           onTap: () {

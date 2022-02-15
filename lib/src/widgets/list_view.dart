@@ -72,7 +72,14 @@ class _ListSingle extends StatelessWidget {
         return BlockWrapper(
           keyValue: '[$current]',
           child: _MapView(json: item, mode: _ViewMode.column),
-          short: '',
+          short: 'Map',
+        );
+      }
+      if (item is List) {
+        return BlockWrapper(
+          keyValue: '[$current]',
+          child: _ListView(json: item, mode: _ViewMode.column),
+          short: 'List',
         );
       }
       return SizedBox.shrink();

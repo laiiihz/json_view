@@ -1,6 +1,6 @@
 name: json_view
 description: a simple json preview package that has a not bad performance. lazy load json tree node that cause less jank.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/laiiihz/json_view
 
 environment:

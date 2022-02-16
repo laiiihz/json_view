@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:json_view/src/widgets/animated_arrow.dart';
 import 'package:json_view/src/widgets/json_tile.dart';
+import 'package:json_view/src/widgets/json_view_configuration.dart';
 
 class BlockWrapper extends StatefulWidget {
   final String keyValue;
@@ -45,11 +46,11 @@ class _BlockWrapperState extends State<BlockWrapper> {
     });
   }
 
-  void _close() {
+  void _close(Duration animation) {
     _showMore = false;
     setState(() {});
     if (_timer != null) {
-      _timer = Timer(Duration(milliseconds: 500), () {
+      _timer = Timer(animation, () {
         if (mounted)
           setState(() {
             _child = SizedBox(height: 24);
@@ -60,27 +61,27 @@ class _BlockWrapperState extends State<BlockWrapper> {
 
   @override
   Widget build(BuildContext context) {
+    final animation = JsonViewConfiguration.of(context).animation;
     return Stack(
       children: [
         ClipRect(
           child: AnimatedAlign(
             alignment: Alignment.topCenter,
-            duration: const Duration(milliseconds: 500),
+            duration: animation,
             curve: Curves.easeInOutCubic,
             child: _child,
             heightFactor: _showMore ? 1 : 0,
           ),
         ),
         JsonTile(
-          leading: AnimatedArrow(
-              isFold: _showMore, duration: Duration(milliseconds: 600)),
+          leading: AnimatedArrow(isFold: _showMore, duration: animation),
           title: widget.keyValue,
           value: _showMore ? '' : widget.short,
           onTap: () {
             if (!_showMore) {
               _open();
             } else {
-              _close();
+              _close(animation);
             }
           },
         ),

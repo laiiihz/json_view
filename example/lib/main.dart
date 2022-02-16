@@ -33,7 +33,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('JSON VIEW')),
-      body: JsonView(json: jsonData),
+      body: JsonViewConfiguration(
+        data: JsonViewConfigurationData.original.copyWith(),
+        child: JsonView(json: jsonData),
+      ),
     );
   }
 }

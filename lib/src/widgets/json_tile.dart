@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:json_view/src/types/json_color_scheme.dart';
+import 'package:json_view/src/widgets/json_view_configuration.dart';
 
 class JsonTile extends StatelessWidget {
   final String title;
@@ -16,7 +16,7 @@ class JsonTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = JsonColor.of(context);
+    final scheme = JsonViewConfiguration.of(context).scheme;
     Color valueColor = scheme.defaultColor;
     if (value is bool) {
       valueColor = scheme.boolColor;

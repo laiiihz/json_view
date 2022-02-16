@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:json_view/src/types/json_color_scheme.dart';
 
 class JsonTile extends StatelessWidget {
   final String title;
@@ -15,15 +16,16 @@ class JsonTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color valueColor = Colors.orange;
+    final scheme = JsonColor.of(context);
+    Color valueColor = scheme.defaultColor;
     if (value is bool) {
-      valueColor = Colors.blue;
+      valueColor = scheme.boolColor;
     } else if (value is num) {
-      valueColor = Colors.lightGreen;
+      valueColor = scheme.numColor;
     } else if (value is String) {
-      valueColor = Colors.orange;
+      valueColor = scheme.stringColor;
     } else if (value == null) {
-      valueColor = Colors.blueGrey;
+      valueColor = scheme.nullColor;
     }
     return Row(
       children: [

@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(title: const Text('JSON VIEW')),
       body: JsonViewConfiguration(
-        data: JsonViewConfigurationData.original.copyWith(),
+        colorScheme: JsonViewColorScheme(),
         child: JsonView(json: jsonData),
       ),
     );

@@ -1,30 +1,65 @@
 const Map<String, dynamic> jsonData = {
-  "string": "json view demo",
-  "int": 1234,
-  "double": 12.34,
-  "null": null,
-  "list1": [],
-  "list2": [1, 2, 3, 4, 5],
-  "list3": [1, "2", 3.0],
-  "list4": [
-    {
-      "map": {
-        "1": 2,
-        "2": 3.0,
-        "3": "3",
-        "4": [4, 5, 6, 7],
-      },
-      "map2": {
-        "0x0": 1,
-      }
-    },
-    [
-      {'test': '123'},
-      {'test2': 12}
-    ],
+  "security.workspace.trust.untrustedFiles": "open",
+  "files.autoSave": "afterDelay",
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.rulers": [80],
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": false
+  },
+  "editor.fontFamily":
+      "JetBrains Mono, Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontLigatures": true,
+  "dart.flutterHotReloadOnSave": "always",
+  "todo-tree.general.tags": [
+    "BUG",
+    "HACK",
+    "FIXME",
+    "TODO",
+    "XXX",
+    "[ ]",
+    "[x]"
   ],
-  "emptyMap": {},
-  "map": {"foo": "bar"},
-  "largeText":
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+  "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*()",
+  "workbench.iconTheme": "Monokai Pro (Filter Spectrum) Icons",
+  "explorer.confirmDelete": false,
+  "dart.debugExternalLibraries": true,
+  "dart.debugSdkLibraries": false,
+  "dart.warnWhenEditingFilesOutsideWorkspace": false,
+  "[vue]": {"editor.defaultFormatter": "dbaeumer.vscode-eslint"},
+  "[javascript]": {"editor.defaultFormatter": "esbenp.prettier-vscode"},
+  "redhat.telemetry.enabled": true,
+  "files.associations": {"*.arb": "json"},
+  "[json]": {"editor.defaultFormatter": "esbenp.prettier-vscode"},
+  "[jsonc]": {"editor.defaultFormatter": "vscode.json-language-features"},
+  "[markdown]": {"editor.defaultFormatter": "yzhang.markdown-all-in-one"},
+  "[html]": {"editor.defaultFormatter": "esbenp.prettier-vscode"},
+  "editor.linkedEditing": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "workbench.productIconTheme": "fluent-icons",
+  "material-icon-theme.hidesExplorerArrows": false,
+  "markdown.showToolbar": true,
+  "dart.analysisExcludedFolders": ["**app_localizations**"],
+  "files.exclude": {
+    "**/doc/api": true,
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  },
+  "dart.showInspectorNotificationsForWidgetErrors": false,
+  "dart.sdkPath": "/Users/laihz/Development/flutter/bin/cache/dart-sdk",
+  "editor.minimap.renderCharacters": false,
+  "editor.inlineSuggest.enabled": true,
+  "eslint.format.enable": true,
+  "explorer.confirmDragAndDrop": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "[yaml]": {"editor.defaultFormatter": "redhat.vscode-yaml"},
+  "dart.debugExternalPackageLibraries": true
 };

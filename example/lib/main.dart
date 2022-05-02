@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
       ),
+      darkTheme: ThemeData.dark(),
       home: HomePage(),
     );
   }

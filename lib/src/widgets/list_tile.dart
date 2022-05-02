@@ -37,6 +37,8 @@ class _ListTileState extends State<ListTile> {
   String get _value {
     if (widget.items.isEmpty) return '[]';
     if (_expanded) return '';
+    if (widget.items.length == 1) return '[0]';
+    if (widget.items.length == 2) return '[0,1]';
     return '[${widget.range.start}...${widget.range.end}]';
   }
 
@@ -53,7 +55,7 @@ class _ListTileState extends State<ListTile> {
     //GAP 100
     if (widget.range.length < 100) {
       final result = <Widget>[];
-      for (var i = 0; i < widget.range.length; i++) {
+      for (var i = 0; i <= widget.range.length; i++) {
         result.add(getIndexedItem(i, widget.items[i]));
       }
       return result;
@@ -101,6 +103,7 @@ class _ListTileState extends State<ListTile> {
 
   @override
   Widget build(BuildContext context) {
+    final jsonConfig = JsonConfig.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -118,7 +121,7 @@ class _ListTileState extends State<ListTile> {
         ),
         if (_expanded)
           Padding(
-            padding: EdgeInsets.only(left: 8),
+            padding: jsonConfig.itemPadding!,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: _children,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:json_view/src/widgets/json_config.dart';
 
 import '../painters/arrow_painter.dart';
 
@@ -30,6 +31,8 @@ class ArrowWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final JsonConfig config = JsonConfig.of(context);
+    final cs = config.color!;
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: onTap,
@@ -39,8 +42,7 @@ class ArrowWidget extends StatelessWidget {
           quarterTurns: _turn,
           child: CustomPaint(
             painter: ArrowPainter(
-              color:
-                  Theme.of(context).textTheme.bodyText1?.color ?? Colors.black,
+              color: cs.markColor,
             ),
             size: const Size(8, 8),
           ),

@@ -4,38 +4,33 @@ List<int> listJsonData() {
 
 Map<String, dynamic> getJsonData() {
   return {
-    'name': 'John',
-    'age': 30,
-    'nullValue': null,
-    'boolValue': false,
-    'emptyMap': {},
-    'details': {
-      'sex': 'male',
-      'outdated': false,
-      'name': 'test',
-      'innerEmptyMap': {},
-      'innerMap': {
-        'map2': {},
-        'map3': {
-          'test': 1,
-          'test2': null,
-        }
-      },
+    'name': 'json view',
+    'version_number': 24,
+    'flutter_project': true,
+    'env': {
+      'dart_version': '2.16.2',
+      'flutter_version': '2.10.5',
     },
-    'cars': [
-      {
-        'name': 'Ford',
-        'models': ['Fiesta', 'Focus', 'Mustang']
-      },
-      {
-        'name': 'BMW',
-        'models': ['320', 'X3', 'X5']
-      },
-      {
-        'name': 'Fiat',
-        'models': ['500', 'Panda']
-      }
-    ],
+    'number_types': {
+      'double': 3.1415,
+      'int': 3,
+    },
+    'types': {
+      'null_type': null,
+      'bool_type': true,
+      'string_type': 'string',
+      'list_type': [],
+      'map_type': {},
+    },
+    'list_in_map': {
+      'list_a': [],
+      'list_b': [1, 2, 3, null],
+      'list_c': [
+        {'a': 'test'}
+      ],
+    },
+    'largeText':
+        '  sedi tempero lemiscus poena tenus corrumpo Inda incredibilis centum putus dulcedo medius quarum aliquotiens opprobrium promptus carbo tendo. minimus non ius instructus uberrime extorqueo praetorgredior consto do cotidie compleo protraho exercitus poena frango Brocherota subvenio fidens Werumensium decet. presumo indigeo forsit directus infortunium neque vulgaris conturbo plagiarius socius Berlinmonte innotesco facina praemo itaque sequi.',
     'largeList': List.generate(
       230 * 100 * 100,
       (index) => {'index': index},

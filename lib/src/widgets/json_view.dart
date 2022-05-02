@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:json_view/src/widgets/list_tile.dart';
-import 'package:json_view/src/widgets/map_tile.dart';
-import 'package:json_view/src/widgets/simple_tiles.dart';
+
+import 'list_tile.dart';
+import 'map_tile.dart';
+import 'simple_tiles.dart';
 
 class JsonView extends StatelessWidget {
   /// {@template json_view.json_view.json}

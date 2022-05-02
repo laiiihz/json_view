@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:json_view/src/widgets/json_config.dart';
+
+import 'json_config.dart';
 
 class _ColonSpan extends TextSpan {
   final TextStyle? style;

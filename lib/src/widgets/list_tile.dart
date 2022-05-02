@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:json_view/json_view.dart';
-import 'package:json_view/src/widgets/arrow_widget.dart';
-import 'package:json_view/src/widgets/simple_tiles.dart';
+import 'arrow_widget.dart';
+import 'json_config.dart';
+import 'json_view.dart';
+import 'simple_tiles.dart';
 
 class IndexRange {
   final int start;

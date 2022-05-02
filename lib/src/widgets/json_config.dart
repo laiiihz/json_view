@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:json_view/src/color_schemes/default_color_scheme.dart';
+import '../color_schemes/default_color_scheme.dart';
 
 class JsonConfig extends InheritedWidget {
   /// color scheme of json view

@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:json_view/src/widgets/json_config.dart';
+import 'package:flutter/widgets.dart';
 
 import '../painters/arrow_painter.dart';
+import 'json_config.dart';
 
 enum ArrowDirection {
   left,

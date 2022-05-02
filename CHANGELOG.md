@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.0
+
+* rewrite project.
+* display large list json data like chrome dev tool.
 ## 0.1.1
 
 * add json color setting

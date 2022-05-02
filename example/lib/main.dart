@@ -27,15 +27,35 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   int size = 100;
+  late TabController _tabController;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('JSON VIEW')),
-      body: JsonViewConfiguration(
-        colorScheme: JsonViewColorScheme(),
-        child: JsonView(json: jsonData),
+      appBar: AppBar(
+        title: const Text('JSON VIEW'),
+        bottom: TabBar(
+          tabs: [
+            Tab(text: 'Map'),
+            Tab(text: 'List'),
+          ],
+          controller: _tabController,
+        ),
+      ),
+      body: TabBarView(
+        children: [
+          JsonView(json: getJsonData()),
+          JsonView(json: listJsonData()),
+        ],
+        controller: _tabController,
       ),
     );
   }

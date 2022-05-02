@@ -1,65 +1,44 @@
-const Map<String, dynamic> jsonData = {
-  "security.workspace.trust.untrustedFiles": "open",
-  "files.autoSave": "afterDelay",
-  "[dart]": {
-    "editor.formatOnSave": true,
-    "editor.formatOnType": true,
-    "editor.rulers": [80],
-    "editor.selectionHighlight": false,
-    "editor.suggest.snippetsPreventQuickSuggestions": false,
-    "editor.suggestSelection": "first",
-    "editor.tabCompletion": "onlySnippets",
-    "editor.wordBasedSuggestions": false
-  },
-  "editor.fontFamily":
-      "JetBrains Mono, Menlo, Monaco, 'Courier New', monospace",
-  "editor.fontLigatures": true,
-  "dart.flutterHotReloadOnSave": "always",
-  "todo-tree.general.tags": [
-    "BUG",
-    "HACK",
-    "FIXME",
-    "TODO",
-    "XXX",
-    "[ ]",
-    "[x]"
-  ],
-  "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*()",
-  "workbench.iconTheme": "Monokai Pro (Filter Spectrum) Icons",
-  "explorer.confirmDelete": false,
-  "dart.debugExternalLibraries": true,
-  "dart.debugSdkLibraries": false,
-  "dart.warnWhenEditingFilesOutsideWorkspace": false,
-  "[vue]": {"editor.defaultFormatter": "dbaeumer.vscode-eslint"},
-  "[javascript]": {"editor.defaultFormatter": "esbenp.prettier-vscode"},
-  "redhat.telemetry.enabled": true,
-  "files.associations": {"*.arb": "json"},
-  "[json]": {"editor.defaultFormatter": "esbenp.prettier-vscode"},
-  "[jsonc]": {"editor.defaultFormatter": "vscode.json-language-features"},
-  "[markdown]": {"editor.defaultFormatter": "yzhang.markdown-all-in-one"},
-  "[html]": {"editor.defaultFormatter": "esbenp.prettier-vscode"},
-  "editor.linkedEditing": true,
-  "[typescript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-  "workbench.productIconTheme": "fluent-icons",
-  "material-icon-theme.hidesExplorerArrows": false,
-  "markdown.showToolbar": true,
-  "dart.analysisExcludedFolders": ["**app_localizations**"],
-  "files.exclude": {
-    "**/doc/api": true,
-    "**/.classpath": true,
-    "**/.project": true,
-    "**/.settings": true,
-    "**/.factorypath": true
-  },
-  "dart.showInspectorNotificationsForWidgetErrors": false,
-  "dart.sdkPath": "/Users/laihz/Development/flutter/bin/cache/dart-sdk",
-  "editor.minimap.renderCharacters": false,
-  "editor.inlineSuggest.enabled": true,
-  "eslint.format.enable": true,
-  "explorer.confirmDragAndDrop": false,
-  "diffEditor.ignoreTrimWhitespace": false,
-  "[yaml]": {"editor.defaultFormatter": "redhat.vscode-yaml"},
-  "dart.debugExternalPackageLibraries": true
-};
+List<int> listJsonData() {
+  return List.generate(200, (index) => index);
+}
+
+Map<String, dynamic> getJsonData() {
+  return {
+    'name': 'John',
+    'age': 30,
+    'nullValue': null,
+    'boolValue': false,
+    'emptyMap': {},
+    'details': {
+      'sex': 'male',
+      'outdated': false,
+      'name': 'test',
+      'innerEmptyMap': {},
+      'innerMap': {
+        'map2': {},
+        'map3': {
+          'test': 1,
+          'test2': null,
+        }
+      },
+    },
+    'cars': [
+      {
+        'name': 'Ford',
+        'models': ['Fiesta', 'Focus', 'Mustang']
+      },
+      {
+        'name': 'BMW',
+        'models': ['320', 'X3', 'X5']
+      },
+      {
+        'name': 'Fiat',
+        'models': ['500', 'Panda']
+      }
+    ],
+    'largeList': List.generate(
+      230 * 100 * 100,
+      (index) => {'index': index},
+    ),
+  };
+}

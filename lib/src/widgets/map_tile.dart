@@ -4,7 +4,6 @@ import 'arrow_widget.dart';
 import 'json_view.dart';
 import 'simple_tiles.dart';
 
-
 class MapTile extends StatefulWidget {
   final String keyName;
   final List<MapEntry> items;

@@ -1,6 +1,6 @@
 name: json_view
 description: A json preview package that has a not bad performance. lazy load json tree node that cause less jank. Support display large list json data like chrome dev tool.
-version: 0.2.0
+version: 0.2.0+1
 homepage: https://github.com/laiiihz/json_view
 
 environment:

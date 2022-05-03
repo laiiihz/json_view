@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.1
+
+* flutter formatted.
+
 ## 0.2.0
 
 * rewrite project.

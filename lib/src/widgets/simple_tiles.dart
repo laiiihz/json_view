@@ -25,10 +25,12 @@ class KeyValueTile extends StatelessWidget {
   final String value;
   final Widget? leading;
   final VoidCallback? onTap;
+  final Widget valueWidget;
   const KeyValueTile(
       {Key? key,
       required this.keyName,
       required this.value,
+      this.valueWidget = const SizedBox(),
       this.leading,
       this.onTap})
       : super(key: key);
@@ -45,7 +47,8 @@ class KeyValueTile extends StatelessWidget {
     final spans = <InlineSpan>[
       _KeySpan(key: keyName, style: TextStyle(color: cs.normalColor)),
       _ColonSpan(style: TextStyle(color: cs.markColor)),
-      _ValueSpan(value: value, style: TextStyle(color: valueColor(context))),
+      _ValueSpan(
+          value: ' $value', style: TextStyle(color: valueColor(context))),
     ];
 
     final text = SelectableText.rich(
@@ -56,9 +59,23 @@ class KeyValueTile extends StatelessWidget {
       return Padding(padding: EdgeInsets.only(left: 8), child: text);
     } else {
       return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: 8, child: leading),
-          Expanded(child: text),
+          SizedBox(child: leading),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(top: 4),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  text,
+                  valueWidget,
+                ],
+              ),
+            ),
+          ),
         ],
       );
     }

@@ -20,27 +20,31 @@ class ListTile extends StatefulWidget {
   final String keyName;
   final List items;
   final IndexRange range;
+  final bool expanded;
+  final Widget? arrow;
 
-  ListTile(
-      {Key? key,
-      required this.keyName,
-      required this.items,
-      required this.range})
-      : super(key: key);
+  ListTile({
+    Key? key,
+    required this.keyName,
+    required this.items,
+    required this.range,
+    this.expanded = false,
+    this.arrow,
+  }) : super(key: key);
 
   @override
   State<ListTile> createState() => _ListTileState();
 }
 
 class _ListTileState extends State<ListTile> {
-  bool _expanded = false;
+  late bool _expanded = widget.expanded;
 
   String get _value {
     if (widget.items.isEmpty) return '[]';
     if (_expanded) return '';
     if (widget.items.length == 1) return '[0]';
     if (widget.items.length == 2) return '[0,1]';
-    return '[${widget.range.start}...${widget.range.end}]';
+    return '[${widget.range.start} ... ${widget.range.end}]';
   }
 
   void changeState() {
@@ -57,7 +61,7 @@ class _ListTileState extends State<ListTile> {
     if (widget.range.length < 100) {
       final result = <Widget>[];
       for (var i = 0; i <= widget.range.length; i++) {
-        result.add(getIndexedItem(i, widget.items[i]));
+        result.add(getIndexedItem(i, widget.items[i], false, widget.arrow));
       }
       return result;
     }
@@ -87,6 +91,8 @@ class _ListTileState extends State<ListTile> {
             keyName: '[$i]',
             items: widget.items,
             range: IndexRange(start: startIndex, end: startIndex + gap - 1),
+            arrow: widget.arrow,
+            expanded: widget.expanded,
           ),
         );
       } else {
@@ -95,6 +101,8 @@ class _ListTileState extends State<ListTile> {
             keyName: '[$i]',
             items: widget.items,
             range: IndexRange(start: startIndex, end: endIndex),
+            arrow: widget.arrow,
+            expanded: widget.expanded,
           ),
         );
       }
@@ -105,30 +113,51 @@ class _ListTileState extends State<ListTile> {
   @override
   Widget build(BuildContext context) {
     final jsonConfig = JsonConfig.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        KeyValueTile(
-          keyName: widget.keyName,
-          value: _value,
-          onTap: changeState,
-          leading: widget.items.isEmpty
-              ? null
-              : ArrowWidget(
-                  direction:
-                      _expanded ? ArrowDirection.down : ArrowDirection.right,
-                  onTap: changeState,
-                ),
-        ),
-        if (_expanded)
-          Padding(
-            padding: jsonConfig.itemPadding!,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: _children,
-            ),
+    return AnimatedSize(
+      alignment: Alignment.topCenter,
+      duration: JsonConfig.of(context).customArrowAnimationDuration ??
+          Duration(milliseconds: 300),
+      curve: JsonConfig.of(context).customArrowAnimationCurve ?? Curves.ease,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          KeyValueTile(
+            keyName: widget.keyName,
+            value: _value,
+            onTap: changeState,
+            leading: widget.items.isEmpty ? null : _arrowWidget,
+            valueWidget: _expanded
+                ? Padding(
+                    padding: jsonConfig.itemPadding!,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: _children,
+                    ),
+                  )
+                : const SizedBox(),
           ),
-      ],
+        ],
+      ),
     );
   }
+
+  Widget get _arrowWidget => widget.arrow == null
+      ? ArrowWidget(
+          direction: _expanded ? ArrowDirection.down : ArrowDirection.right,
+          onTap: changeState,
+        )
+      : MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: changeState,
+            child: AnimatedRotation(
+              turns: _expanded ? -.25 : 0,
+              duration: JsonConfig.of(context).customArrowAnimationDuration ??
+                  Duration(milliseconds: 300),
+              curve: JsonConfig.of(context).customArrowAnimationCurve ??
+                  Curves.ease,
+              child: widget.arrow,
+            ),
+          ),
+        );
 }

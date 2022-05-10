@@ -9,12 +9,20 @@ class JsonConfig extends InheritedWidget {
   /// item padding
   final EdgeInsetsGeometry? itemPadding;
 
+  /// default is 300 milliseconds
+  final Duration? customArrowAnimationDuration;
+
+  /// default is [Curves.ease]
+  final Curve? customArrowAnimationCurve;
+
   /// configuration of json view
   const JsonConfig({
     Key? key,
     Widget? child,
     this.color,
     this.itemPadding,
+    this.customArrowAnimationCurve,
+    this.customArrowAnimationDuration,
   }) : super(key: key, child: child ?? const SizedBox.shrink());
   @override
   bool updateShouldNotify(JsonConfig oldWidget) => color != oldWidget.color;

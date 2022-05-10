@@ -53,8 +53,15 @@ class _HomePageState extends State<HomePage>
       ),
       body: TabBarView(
         children: [
-          JsonView(json: getJsonData()),
-          JsonView(json: listJsonData()),
+          JsonView(
+            json: getJsonData(),
+            openAtStart: true,
+            arrow: Icon(Icons.arrow_drop_down_rounded),
+          ),
+          JsonView(
+            json: listJsonData(),
+            arrow: Icon(Icons.arrow_drop_down_rounded),
+          ),
         ],
         controller: _tabController,
       ),

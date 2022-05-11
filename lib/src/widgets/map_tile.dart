@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:json_view/json_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../json_view.dart';
+import '../cubit/expansion_cubit.dart';
 import 'arrow_widget.dart';
-import 'json_view.dart';
 import 'simple_tiles.dart';
 
 class MapTile extends StatefulWidget {
@@ -10,7 +11,7 @@ class MapTile extends StatefulWidget {
   final List<MapEntry> items;
   final bool expanded;
   final Widget? arrow;
-  MapTile({
+  const MapTile({
     Key? key,
     required this.keyName,
     required this.items,
@@ -23,19 +24,34 @@ class MapTile extends StatefulWidget {
 }
 
 class _MapTileState extends State<MapTile> {
-  late bool _expanded = widget.expanded;
-
-  String get _value {
-    if (widget.items.isEmpty) return '{}';
-    if (_expanded) return '';
-    return '{...}';
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<ExpansionCubit>(
+      create: (context) => ExpansionCubit(widget.expanded),
+      child: _MapTile(
+        keyName: widget.keyName,
+        items: widget.items,
+        arrow: widget.arrow,
+      ),
+    );
   }
+}
 
-  void changeState() {
-    if (widget.items.isNotEmpty)
-      setState(() {
-        _expanded = !_expanded;
-      });
+class _MapTile extends StatelessWidget {
+  final String keyName;
+  final List<MapEntry> items;
+  final Widget? arrow;
+  const _MapTile({
+    Key? key,
+    required this.keyName,
+    required this.items,
+    required this.arrow,
+  }) : super(key: key);
+
+  void _changeState(BuildContext context) {
+    if (items.isNotEmpty) {
+      context.read<ExpansionCubit>().toogleExpansion();
+    }
   }
 
   @override
@@ -43,55 +59,66 @@ class _MapTileState extends State<MapTile> {
     return AnimatedSize(
       alignment: Alignment.topCenter,
       duration: JsonConfig.of(context).customArrowAnimationDuration ??
-          Duration(milliseconds: 300),
+          const Duration(milliseconds: 300),
       curve: JsonConfig.of(context).customArrowAnimationCurve ?? Curves.ease,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          KeyValueTile(
-            keyName: widget.keyName,
-            value: _value,
-            onTap: changeState,
-            leading: widget.items.isEmpty ? null : _arrowWidget,
-            valueWidget: _expanded
-                ? Padding(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: widget.items.map((item) {
-                        return getParsedItem(
-                          item.key,
-                          item.value,
-                          false,
-                          widget.arrow,
-                        );
-                      }).toList(),
-                    ),
-                  )
-                : const SizedBox(),
+          BlocBuilder<ExpansionCubit, ExpansionState>(
+            builder: (context, state) => KeyValueTile(
+              keyName: keyName,
+              value: () {
+                if (items.isEmpty) return '{}';
+                if (state.isExpanded) return '';
+                return '{ ... }';
+              }(),
+              onTap: () => _changeState(context),
+              leading: items.isEmpty ? null : _arrowWidget,
+              valueWidget: state.isExpanded
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: items.map((item) {
+                          return getParsedItem(
+                            item.key,
+                            item.value,
+                            false,
+                            arrow,
+                          );
+                        }).toList(),
+                      ),
+                    )
+                  : const SizedBox(),
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget get _arrowWidget => widget.arrow == null
-      ? ArrowWidget(
-          direction: _expanded ? ArrowDirection.down : ArrowDirection.right,
-          onTap: changeState,
-        )
-      : MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: changeState,
-            child: AnimatedRotation(
-              turns: _expanded ? -.25 : 0,
-              duration: JsonConfig.of(context).customArrowAnimationDuration ??
-                  Duration(milliseconds: 300),
-              curve: JsonConfig.of(context).customArrowAnimationCurve ??
-                  Curves.ease,
-              child: widget.arrow,
-            ),
-          ),
-        );
+  Widget get _arrowWidget => BlocBuilder<ExpansionCubit, ExpansionState>(
+        builder: (context, state) => arrow == null
+            ? ArrowWidget(
+                direction: state.isExpanded
+                    ? ArrowDirection.down
+                    : ArrowDirection.right,
+                onTap: () => _changeState(context),
+              )
+            : MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () => _changeState(context),
+                  child: AnimatedRotation(
+                    turns: state.isExpanded ? 0 : -.25,
+                    duration:
+                        JsonConfig.of(context).customArrowAnimationDuration ??
+                            const Duration(milliseconds: 300),
+                    curve: JsonConfig.of(context).customArrowAnimationCurve ??
+                        Curves.ease,
+                    child: arrow,
+                  ),
+                ),
+              ),
+      );
 }

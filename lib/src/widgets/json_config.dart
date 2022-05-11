@@ -15,6 +15,9 @@ class JsonConfig extends InheritedWidget {
   /// default is [Curves.ease]
   final Curve? customArrowAnimationCurve;
 
+  /// style scheme of json view
+  final JsonStyleScheme? styles;
+
   /// configuration of json view
   const JsonConfig({
     Key? key,
@@ -23,6 +26,7 @@ class JsonConfig extends InheritedWidget {
     this.itemPadding,
     this.customArrowAnimationCurve,
     this.customArrowAnimationDuration,
+    this.styles,
   }) : super(key: key, child: child ?? const SizedBox.shrink());
   @override
   bool updateShouldNotify(JsonConfig oldWidget) => color != oldWidget.color;
@@ -33,15 +37,19 @@ class JsonConfig extends InheritedWidget {
     if (current == null) {
       return JsonConfig(
         color: defaultColor(context),
-        itemPadding: EdgeInsets.only(left: 8),
+        itemPadding: const EdgeInsets.only(left: 8),
+        styles: defaultStyle(context),
       );
     } else {
       JsonConfig chain = current;
       if (current.color == null) {
         chain = chain.copyWith(color: defaultColor(context));
       }
+      if (current.styles == null) {
+        chain = chain.copyWith(styles: defaultStyle(context));
+      }
       if (current.itemPadding == null) {
-        chain = chain.copyWith(itemPadding: EdgeInsets.only(left: 8));
+        chain = chain.copyWith(itemPadding: const EdgeInsets.only(left: 8));
       }
       return chain;
     }
@@ -57,16 +65,25 @@ class JsonConfig extends InheritedWidget {
     }
   }
 
+  /// default style scheme
+  static JsonStyleScheme defaultStyle(BuildContext context) =>
+      const JsonStyleScheme(
+        keysStyle: TextStyle(),
+        valuesStyle: TextStyle(),
+      );
+
   /// copy with
   JsonConfig copyWith({
     JsonColorScheme? color,
     Widget? child,
     EdgeInsetsGeometry? itemPadding,
+    JsonStyleScheme? styles,
   }) {
     return JsonConfig(
       child: child ?? this.child,
       color: color ?? this.color,
       itemPadding: itemPadding ?? this.itemPadding,
+      styles: styles ?? this.styles,
     );
   }
 }
@@ -90,6 +107,9 @@ class JsonColorScheme {
   /// color for arrow & other widget
   final Color markColor;
 
+  /// color for null background
+  final Color nullBackground;
+
   /// Json color scheme
   const JsonColorScheme({
     required this.nullColor,
@@ -98,5 +118,24 @@ class JsonColorScheme {
     required this.stringColor,
     required this.normalColor,
     required this.markColor,
+    this.nullBackground = Colors.transparent,
+  });
+}
+
+class JsonStyleScheme {
+  /// text style for keys
+  final TextStyle keysStyle;
+
+  /// text style for values
+  final TextStyle valuesStyle;
+
+  /// add double quotation on keys or not. default set to false
+  final bool addDoubleQuotation;
+
+  /// Json color scheme
+  const JsonStyleScheme({
+    this.keysStyle = const TextStyle(),
+    this.valuesStyle = const TextStyle(),
+    this.addDoubleQuotation = false,
   });
 }

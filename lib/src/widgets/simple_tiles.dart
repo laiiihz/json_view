@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:json_view/src/painters/null_background.dart';
 
 import '../models/json_color_scheme.dart';
 import '../models/json_style_scheme.dart';
@@ -32,14 +31,12 @@ class KeyValueTile extends StatelessWidget {
   final String value;
   final Widget? leading;
   final VoidCallback? onTap;
-  final Widget valueWidget;
   final bool isNullValue;
   const KeyValueTile({
     Key? key,
     required this.keyName,
     required this.value,
     this.isNullValue = false,
-    this.valueWidget = const SizedBox(),
     this.leading,
     this.onTap,
   }) : super(key: key);
@@ -91,26 +88,13 @@ class KeyValueTile extends StatelessWidget {
       onTap: onTap,
     );
     if (leading == null) {
-      return Padding(padding: const EdgeInsets.only(left: 8), child: text);
+      return Padding(padding: const EdgeInsets.only(left: 16), child: text);
     } else {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(child: leading),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 4),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  text,
-                  valueWidget,
-                ],
-              ),
-            ),
-          ),
+          Expanded(child: text),
         ],
       );
     }

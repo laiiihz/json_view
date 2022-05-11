@@ -40,42 +40,48 @@ class _MapTileState extends State<MapTile> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSize(
-      alignment: Alignment.topCenter,
-      duration: JsonConfig.of(context).animationDuration ??
-          const Duration(milliseconds: 300),
-      curve: JsonConfig.of(context).animationCurve ?? Curves.ease,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          KeyValueTile(
-            keyName: widget.keyName,
-            value: _value,
-            onTap: _changeState,
-            leading: widget.items.isEmpty
-                ? null
-                : ArrowWidget(
-                    expanded: _expanded,
-                    onTap: _changeState,
-                    customArrow: widget.arrow,
-                  ),
-          ),
-          if (_expanded)
-            Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: widget.items.map((item) {
-                  return getParsedItem(
-                    item.key,
-                    item.value,
-                    widget.arrow,
-                  );
-                }).toList(),
-              ),
+    final jsonConfig = JsonConfig.of(context);
+    Widget result = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        KeyValueTile(
+          keyName: widget.keyName,
+          value: _value,
+          onTap: _changeState,
+          leading: widget.items.isEmpty
+              ? null
+              : ArrowWidget(
+                  expanded: _expanded,
+                  onTap: _changeState,
+                  customArrow: widget.arrow,
+                ),
+        ),
+        if (_expanded)
+          Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: widget.items.map((item) {
+                return getParsedItem(
+                  item.key,
+                  item.value,
+                  widget.arrow,
+                );
+              }).toList(),
             ),
-        ],
-      ),
+          ),
+      ],
     );
+    if (jsonConfig.animation ?? JsonConfigData.kUseAnimation) {
+      result = AnimatedSize(
+        alignment: Alignment.topCenter,
+        duration: JsonConfig.of(context).animationDuration ??
+            const Duration(milliseconds: 300),
+        curve: JsonConfig.of(context).animationCurve ?? Curves.ease,
+        child: result,
+      );
+    }
+
+    return result;
   }
 }

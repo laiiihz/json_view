@@ -112,13 +112,13 @@ class JsonColorScheme {
 
   /// Json color scheme
   const JsonColorScheme({
-    this.nullColor = Colors.transparent,
+    required this.nullColor,
     required this.boolColor,
     required this.numColor,
     required this.stringColor,
     required this.normalColor,
     required this.markColor,
-    required this.nullBackground,
+    this.nullBackground = Colors.transparent,
   });
 }
 

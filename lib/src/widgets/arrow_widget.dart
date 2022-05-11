@@ -1,6 +1,7 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
-import 'dart:math' as math;
 import '../painters/arrow_painter.dart';
 import 'json_config.dart';
 

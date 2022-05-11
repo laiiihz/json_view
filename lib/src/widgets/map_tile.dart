@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:json_view/json_view.dart';
 
 import 'arrow_widget.dart';
+import 'json_config.dart';
+import 'json_view.dart';
 import 'simple_tiles.dart';
 
 class MapTile extends StatefulWidget {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:json_view/src/widgets/json_config.dart';
+
+import '../widgets/json_config.dart';
 
 const defaultLightColorScheme = JsonColorScheme(
   nullColor: Colors.teal,

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:json_view/src/painters/null_background.dart';
 
 import 'json_config.dart';
 
 class _ColonSpan extends TextSpan {
   const _ColonSpan({
     TextStyle? style,
-  }) : super(text: ':', style: style);
+  }) : super(text: ' : ', style: style);
 }
 
 class _KeySpan extends TextSpan {
@@ -30,10 +31,12 @@ class KeyValueTile extends StatelessWidget {
   final Widget? leading;
   final VoidCallback? onTap;
   final Widget valueWidget;
+  final bool isNullValue;
   const KeyValueTile({
     Key? key,
     required this.keyName,
     required this.value,
+    this.isNullValue = false,
     this.valueWidget = const SizedBox(),
     this.leading,
     this.onTap,
@@ -47,9 +50,6 @@ class KeyValueTile extends StatelessWidget {
 
   Color valueColor(BuildContext context) => colorScheme(context).normalColor;
 
-  TextStyle valueStyle(BuildContext context) =>
-      styleScheme(context).valuesStyle;
-
   @override
   Widget build(BuildContext context) {
     // cs stand for colorScheme
@@ -58,13 +58,29 @@ class KeyValueTile extends StatelessWidget {
     final ss = styleScheme(context);
     final spans = <InlineSpan>[
       _KeySpan(
-          keyValue: ss.addDoubleQuotation ? '"$keyName" ' : '$keyName ',
+          keyValue: ss.addDoubleQuotation ? '"$keyName"' : keyName,
           style: ss.keysStyle.copyWith(color: cs.normalColor)),
       _ColonSpan(style: ss.keysStyle.copyWith(color: cs.markColor)),
-      _ValueSpan(
-        value: ' $value',
-        style: ss.valuesStyle.copyWith(color: valueColor(context)),
-      ),
+      isNullValue
+          ? WidgetSpan(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(3),
+                  color: cs.nullBackground,
+                ),
+                child: Text(
+                  value,
+                  style: ss.valuesStyle.copyWith(color: valueColor(context)),
+                ),
+              ),
+            )
+          : _ValueSpan(
+              value: value,
+              style: ss.valuesStyle.copyWith(
+                color: valueColor(context),
+              ),
+            ),
     ];
 
     final text = SelectableText.rich(
@@ -102,7 +118,12 @@ class NullTile extends KeyValueTile {
   const NullTile({
     Key? key,
     required String keyName,
-  }) : super(key: key, keyName: keyName, value: 'null');
+  }) : super(
+          key: key,
+          keyName: keyName,
+          value: ' null ',
+          isNullValue: true,
+        );
 
   @override
   Color valueColor(BuildContext context) => colorScheme(context).nullColor;

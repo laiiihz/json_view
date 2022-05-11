@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:json_view/json_view.dart';
 
 import 'arrow_widget.dart';
-import 'json_view.dart';
 import 'simple_tiles.dart';
 
 class MapTile extends StatefulWidget {
@@ -85,7 +84,7 @@ class _MapTileState extends State<MapTile> {
           child: GestureDetector(
             onTap: changeState,
             child: AnimatedRotation(
-              turns: _expanded ? -.25 : 0,
+              turns: _expanded ? 0 : -.25,
               duration: JsonConfig.of(context).customArrowAnimationDuration ??
                   Duration(milliseconds: 300),
               curve: JsonConfig.of(context).customArrowAnimationCurve ??

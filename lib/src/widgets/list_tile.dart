@@ -115,9 +115,9 @@ class _ListTileState extends State<ListTile> {
     final jsonConfig = JsonConfig.of(context);
     return AnimatedSize(
       alignment: Alignment.topCenter,
-      duration: JsonConfig.of(context).customArrowAnimationDuration ??
+      duration: jsonConfig.customArrowAnimationDuration ??
           Duration(milliseconds: 300),
-      curve: JsonConfig.of(context).customArrowAnimationCurve ?? Curves.ease,
+      curve: jsonConfig.customArrowAnimationCurve ?? Curves.ease,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -151,7 +151,7 @@ class _ListTileState extends State<ListTile> {
           child: GestureDetector(
             onTap: changeState,
             child: AnimatedRotation(
-              turns: _expanded ? -.25 : 0,
+              turns: _expanded ? 0 : -.25,
               duration: JsonConfig.of(context).customArrowAnimationDuration ??
                   Duration(milliseconds: 300),
               curve: JsonConfig.of(context).customArrowAnimationCurve ??

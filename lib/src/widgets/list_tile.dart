@@ -142,9 +142,9 @@ class _ListTile extends StatelessWidget {
     final jsonConfig = JsonConfig.of(context);
     return AnimatedSize(
       alignment: Alignment.topCenter,
-      duration: jsonConfig.customArrowAnimationDuration ??
-          const Duration(milliseconds: 300),
-      curve: jsonConfig.customArrowAnimationCurve ?? Curves.ease,
+      duration:
+          jsonConfig.animationDuration ?? const Duration(milliseconds: 300),
+      curve: jsonConfig.animationCurve ?? Curves.ease,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -177,27 +177,10 @@ class _ListTile extends StatelessWidget {
   }
 
   Widget get _arrowWidget => BlocBuilder<ExpansionCubit, ExpansionState>(
-        builder: (context, state) => arrow == null
-            ? ArrowWidget(
-                direction: state.isExpanded
-                    ? ArrowDirection.down
-                    : ArrowDirection.right,
-                onTap: () => _changeState(context),
-              )
-            : MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: () => _changeState(context),
-                  child: AnimatedRotation(
-                    turns: state.isExpanded ? 0 : -.25,
-                    duration:
-                        JsonConfig.of(context).customArrowAnimationDuration ??
-                            const Duration(milliseconds: 300),
-                    curve: JsonConfig.of(context).customArrowAnimationCurve ??
-                        Curves.ease,
-                    child: arrow,
-                  ),
-                ),
-              ),
+        builder: (context, state) => ArrowWidget(
+          expanded: state.isExpanded,
+          onTap: () => _changeState(context),
+          customArrow: arrow,
+        ),
       );
 }

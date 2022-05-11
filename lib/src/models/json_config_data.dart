@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'json_color_scheme.dart';
 import 'json_style_scheme.dart';
 
+/// Json View Configuration Data
 class JsonConfigData {
   /// color scheme of json view
   final JsonColorScheme? color;
@@ -26,6 +27,7 @@ class JsonConfigData {
   /// only work with [animation] is true
   final Curve? animationCurve;
 
+  /// Json View Configuration Data
   JsonConfigData({
     this.color,
     this.style,
@@ -35,11 +37,19 @@ class JsonConfigData {
     this.animationCurve,
   });
 
+  /// default use animation
   static const kUseAnimation = true;
+
+  /// default item padding
   static const kItemPadding = EdgeInsets.only(left: 8);
+
+  /// default animation duration
   static const kAnimationDuration = Duration(milliseconds: 300);
+
+  /// default animation curve
   static const kAnimationCurve = Curves.easeInOutCubic;
 
+  /// fallback JsonConfigData
   factory JsonConfigData.fallback(BuildContext context) {
     return JsonConfigData(
       color: defaultColor(context),
@@ -71,6 +81,7 @@ class JsonConfigData {
         quotation: JsonQuotation(),
       );
 
+  /// copy another JsonConfigData
   JsonConfigData copyWith({
     JsonColorScheme? color,
     JsonStyleScheme? style,
@@ -89,6 +100,7 @@ class JsonConfigData {
     );
   }
 
+  /// merge another JsonConfigData
   JsonConfigData merge(JsonConfigData? data) {
     if (data == null) return this;
     return copyWith(

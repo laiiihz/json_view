@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 0.3.0
+
+* add animation (with duration & curves). @P-B1101
+* add null value background. @P-B1101
+* add more configuration. @laiiihz
+* add key & value style. @P-B1101
+* custom arrow widget. @@P-B1101
+* global configuration for arrow(WIP). @laiiihz
+
 ## 0.2.1
 
 * flutter formatted.

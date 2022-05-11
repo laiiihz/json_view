@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/json_config_data.dart';
 
 class JsonConfig extends InheritedWidget {
+  /// json configuration data
   final JsonConfigData? data;
 
   /// configuration of json view

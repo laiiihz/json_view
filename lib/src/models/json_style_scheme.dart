@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 
+/// JsonQuotation
 class JsonQuotation {
+  /// left qoute
   final String? leftQuote;
+
+  /// right qoute
   final String? rightQuote;
   const JsonQuotation({
     this.leftQuote,
     this.rightQuote,
   });
 
+  /// left qoute and right qoute are same
   const JsonQuotation.same(String quote)
       : leftQuote = quote,
         rightQuote = quote;
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -24,6 +30,7 @@ class JsonQuotation {
   int get hashCode => hashValues(leftQuote, rightQuote);
 }
 
+/// json style scheem
 class JsonStyleScheme {
   /// text style for keys
   final TextStyle? keysStyle;
@@ -41,6 +48,7 @@ class JsonStyleScheme {
     this.quotation = const JsonQuotation(),
   });
 
+  /// copy another JsonStyleScheme
   JsonStyleScheme copyWith({
     TextStyle? keysStyle,
     TextStyle? valuesStyle,
@@ -53,6 +61,7 @@ class JsonStyleScheme {
     );
   }
 
+  /// merge another JsonStyleScheme
   JsonStyleScheme merge(JsonStyleScheme? scheme) {
     if (scheme == null) return this;
     return copyWith(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Json Color Scheme
 class JsonColorScheme {
   /// color for null value
   final Color? nullColor;
@@ -32,6 +33,7 @@ class JsonColorScheme {
     this.nullBackground,
   });
 
+  /// copy colors from another scheme
   JsonColorScheme copyWith({
     Color? nullColor,
     Color? boolColor,
@@ -52,6 +54,7 @@ class JsonColorScheme {
     );
   }
 
+  /// merge colors from another scheme
   JsonColorScheme merge(JsonColorScheme? scheme) {
     if (scheme == null) return this;
     return copyWith(
@@ -91,6 +94,7 @@ class JsonColorScheme {
       );
 }
 
+/// default light color scheme
 const defaultLightColorScheme = JsonColorScheme(
   nullColor: Colors.teal,
   boolColor: Colors.blue,
@@ -100,6 +104,7 @@ const defaultLightColorScheme = JsonColorScheme(
   markColor: Colors.black87,
 );
 
+/// default dark color scheme
 final defaultDarkColorScheme = JsonColorScheme(
   nullColor: Colors.teal[200]!,
   boolColor: Colors.blue[200]!,

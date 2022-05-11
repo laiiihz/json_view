@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:json_view/src/painters/null_background.dart';
 
+import '../models/json_color_scheme.dart';
+import '../models/json_style_scheme.dart';
 import 'json_config.dart';
 
 class _ColonSpan extends TextSpan {
@@ -46,19 +48,22 @@ class KeyValueTile extends StatelessWidget {
       JsonConfig.of(context).color!;
 
   JsonStyleScheme styleScheme(BuildContext context) =>
-      JsonConfig.of(context).styles!;
+      JsonConfig.of(context).style!;
 
-  Color valueColor(BuildContext context) => colorScheme(context).normalColor;
+  Color valueColor(BuildContext context) =>
+      colorScheme(context).normalColor ?? Colors.black;
 
   @override
   Widget build(BuildContext context) {
     // cs stand for colorScheme
     final cs = colorScheme(context);
-    // cs stand for styleScheme
+    // ss stand for styleScheme
     final ss = styleScheme(context);
     final spans = <InlineSpan>[
       _KeySpan(
-          keyValue: ss.addDoubleQuotation ? '"$keyName"' : keyName,
+          keyValue: ss.quotation == null
+              ? keyName
+              : '${ss.quotation}$keyName${ss.quotation}',
           style: ss.keysStyle.copyWith(color: cs.normalColor)),
       _ColonSpan(style: ss.keysStyle.copyWith(color: cs.markColor)),
       isNullValue
@@ -126,7 +131,8 @@ class NullTile extends KeyValueTile {
         );
 
   @override
-  Color valueColor(BuildContext context) => colorScheme(context).nullColor;
+  Color valueColor(BuildContext context) =>
+      colorScheme(context).nullColor ?? Colors.teal;
 }
 
 class NumTile extends KeyValueTile {
@@ -141,7 +147,8 @@ class NumTile extends KeyValueTile {
         );
 
   @override
-  Color valueColor(BuildContext context) => colorScheme(context).numColor;
+  Color valueColor(BuildContext context) =>
+      colorScheme(context).numColor ?? Colors.green;
 }
 
 class BoolTile extends KeyValueTile {
@@ -156,7 +163,8 @@ class BoolTile extends KeyValueTile {
         );
 
   @override
-  Color valueColor(BuildContext context) => colorScheme(context).boolColor;
+  Color valueColor(BuildContext context) =>
+      colorScheme(context).boolColor ?? Colors.blue;
 }
 
 class StringTile extends KeyValueTile {
@@ -171,5 +179,6 @@ class StringTile extends KeyValueTile {
         );
 
   @override
-  Color valueColor(BuildContext context) => colorScheme(context).stringColor;
+  Color valueColor(BuildContext context) =>
+      colorScheme(context).stringColor ?? Colors.orange;
 }

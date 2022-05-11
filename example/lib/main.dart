@@ -52,17 +52,19 @@ class _HomePageState extends State<HomePage>
         ),
       ),
       body: JsonConfig(
-        styles: JsonStyleScheme(
-          addDoubleQuotation: true,
-        ),
-        color: JsonColorScheme(
-          nullBackground: const Color(0xFFEBEBEB),
-          nullColor: Colors.teal,
-          boolColor: Colors.blue,
-          numColor: Colors.green,
-          stringColor: Colors.orange,
-          normalColor: Colors.grey,
-          markColor: Colors.black87,
+        data: JsonConfigData(
+          style: JsonStyleScheme(
+            quotation: '">',
+          ),
+          color: JsonColorScheme(
+            nullBackground: const Color(0xFFEBEBEB),
+            nullColor: Colors.teal,
+            boolColor: Colors.blue,
+            numColor: Colors.green,
+            stringColor: Colors.orange,
+            normalColor: Colors.grey,
+            markColor: Colors.black87,
+          ),
         ),
         child: TabBarView(
           children: [

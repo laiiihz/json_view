@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:json_view/src/painters/value_background_painter.dart';
 
 import '../models/json_color_scheme.dart';
 import '../models/json_style_scheme.dart';
+import '../painters/value_background_painter.dart';
 import 'json_config.dart';
 
 typedef SpanBuilder = InlineSpan Function(BuildContext context, dynamic value);

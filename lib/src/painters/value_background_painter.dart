@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//TODO more customizable value background
 class ValueBackgroundPainter extends CustomPainter {
   final Color color;
   final Radius radius;

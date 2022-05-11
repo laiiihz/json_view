@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:json_view/src/models/json_style_scheme.dart';
 
 import 'json_color_scheme.dart';
+import 'json_style_scheme.dart';
 
 class JsonConfigData {
   /// color scheme of json view

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:json_view/src/models/json_config_data.dart';
 
+import '../models/json_config_data.dart';
 import 'arrow_widget.dart';
 import 'json_config.dart';
 import 'json_view.dart';

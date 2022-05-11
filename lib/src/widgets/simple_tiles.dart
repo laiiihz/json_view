@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:json_view/src/painters/value_background_painter.dart';
 
 import '../models/json_color_scheme.dart';
 import '../models/json_style_scheme.dart';
 import 'json_config.dart';
+
+typedef SpanBuilder = InlineSpan Function(BuildContext context, dynamic value);
 
 class _ColonSpan extends TextSpan {
   const _ColonSpan({
@@ -31,12 +34,13 @@ class KeyValueTile extends StatelessWidget {
   final String value;
   final Widget? leading;
   final VoidCallback? onTap;
-  final bool isNullValue;
+
+  final SpanBuilder? valueBuilder;
   const KeyValueTile({
     Key? key,
     required this.keyName,
     required this.value,
-    this.isNullValue = false,
+    this.valueBuilder,
     this.leading,
     this.onTap,
   }) : super(key: key);
@@ -58,58 +62,78 @@ class KeyValueTile extends StatelessWidget {
     final ss = styleScheme(context);
     final spans = <InlineSpan>[
       _KeySpan(
-          keyValue: ss.quotation == null
-              ? keyName
-              : '${ss.quotation!.leftQuote}$keyName${ss.quotation!.rightQuote}',
-          style: ss.keysStyle?.copyWith(color: cs.normalColor)),
-      _ColonSpan(style: ss.keysStyle?.copyWith(color: cs.markColor)),
-      isNullValue
-          ? WidgetSpan(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 2),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(3),
-                  color: cs.nullBackground,
-                ),
-                child: Text(
-                  value,
-                  style: ss.valuesStyle?.copyWith(color: valueColor(context)),
-                ),
-              ),
-            )
-          : _ValueSpan(
+        keyValue: ss.quotation == null
+            ? keyName
+            : '${ss.quotation!.leftQuote}$keyName${ss.quotation!.rightQuote}',
+        style: ss.keysStyle ??
+            const TextStyle().copyWith(color: cs.normalColor ?? Colors.grey),
+      ),
+      _ColonSpan(
+        style: ss.keysStyle ??
+            const TextStyle().copyWith(color: cs.markColor ?? Colors.white70),
+      ),
+      valueBuilder == null
+          ? _ValueSpan(
               value: value,
               style: ss.valuesStyle?.copyWith(color: valueColor(context)),
-            ),
+            )
+          : valueBuilder!(context, value),
     ];
 
-    final text = SelectableText.rich(
+    Widget result = SelectableText.rich(
       TextSpan(children: spans),
       onTap: onTap,
     );
     if (leading == null) {
-      return Padding(padding: const EdgeInsets.only(left: 16), child: text);
+      result = Padding(padding: const EdgeInsets.only(left: 16), child: result);
     } else {
-      return Row(
+      result = Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(child: leading),
-          Expanded(child: text),
+          Expanded(child: result),
         ],
       );
     }
+
+    return result;
   }
 }
 
 class NullTile extends KeyValueTile {
-  const NullTile({
+  NullTile({
     Key? key,
     required String keyName,
   }) : super(
           key: key,
           keyName: keyName,
-          value: ' null ',
-          isNullValue: true,
+          value: 'null',
+          valueBuilder: (context, value) {
+            final config = JsonConfig.of(context);
+            final color = config.color?.nullBackground;
+            if (color == null) {
+              return _ValueSpan(value: value);
+            }
+
+            return WidgetSpan(
+              child: CustomPaint(
+                painter: ValueBackgroundPainter(
+                  color: color,
+                  radius: const Radius.circular(4),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: Text(
+                    value,
+                    style: config.style?.valuesStyle ??
+                        const TextStyle().copyWith(
+                          color: config.color?.normalColor ?? Colors.grey,
+                        ),
+                  ),
+                ),
+              ),
+            );
+          },
         );
 
   @override

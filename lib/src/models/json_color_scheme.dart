@@ -98,7 +98,6 @@ const defaultLightColorScheme = JsonColorScheme(
   stringColor: Colors.orange,
   normalColor: Colors.grey,
   markColor: Colors.black87,
-  nullBackground: Colors.transparent,
 );
 
 final defaultDarkColorScheme = JsonColorScheme(
@@ -108,5 +107,4 @@ final defaultDarkColorScheme = JsonColorScheme(
   stringColor: Colors.orange[200]!,
   normalColor: Colors.grey,
   markColor: Colors.white70,
-  nullBackground: Colors.transparent,
 );

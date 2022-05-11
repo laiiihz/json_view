@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:json_view/src/models/json_config_data.dart';
 
 import 'arrow_widget.dart';
 import 'json_config.dart';
@@ -113,36 +114,41 @@ class _ListTileState extends State<ListTile> {
   @override
   Widget build(BuildContext context) {
     final jsonConfig = JsonConfig.of(context);
-    return AnimatedSize(
-      alignment: Alignment.topCenter,
-      duration:
-          jsonConfig.animationDuration ?? const Duration(milliseconds: 300),
-      curve: jsonConfig.animationCurve ?? Curves.ease,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          KeyValueTile(
-            keyName: widget.keyName,
-            value: _value,
-            onTap: _changeState,
-            leading: widget.items.isEmpty
-                ? null
-                : ArrowWidget(
-                    expanded: _expanded,
-                    onTap: _changeState,
-                    customArrow: widget.arrow,
-                  ),
-          ),
-          if (_expanded)
-            Padding(
-              padding: jsonConfig.itemPadding!,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: _children,
-              ),
+    Widget result = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        KeyValueTile(
+          keyName: widget.keyName,
+          value: _value,
+          onTap: _changeState,
+          leading: widget.items.isEmpty
+              ? null
+              : ArrowWidget(
+                  expanded: _expanded,
+                  onTap: _changeState,
+                  customArrow: widget.arrow,
+                ),
+        ),
+        if (_expanded)
+          Padding(
+            padding: jsonConfig.itemPadding!,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: _children,
             ),
-        ],
-      ),
+          ),
+      ],
     );
+    if (jsonConfig.animation ?? JsonConfigData.kUseAnimation) {
+      result = AnimatedSize(
+        alignment: Alignment.topCenter,
+        duration:
+            jsonConfig.animationDuration ?? const Duration(milliseconds: 300),
+        curve: jsonConfig.animationCurve ?? Curves.ease,
+        child: result,
+      );
+    }
+
+    return result;
   }
 }

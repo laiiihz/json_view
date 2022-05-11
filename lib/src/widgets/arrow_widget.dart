@@ -2,7 +2,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../json_view.dart';
-import '../models/json_config_data.dart';
 import '../painters/arrow_painter.dart';
 
 class ArrowWidget extends StatelessWidget {

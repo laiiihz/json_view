@@ -63,9 +63,9 @@ class KeyValueTile extends StatelessWidget {
       _KeySpan(
           keyValue: ss.quotation == null
               ? keyName
-              : '${ss.quotation}$keyName${ss.quotation}',
-          style: ss.keysStyle.copyWith(color: cs.normalColor)),
-      _ColonSpan(style: ss.keysStyle.copyWith(color: cs.markColor)),
+              : '${ss.quotation!.leftQuote}$keyName${ss.quotation!.rightQuote}',
+          style: ss.keysStyle?.copyWith(color: cs.normalColor)),
+      _ColonSpan(style: ss.keysStyle?.copyWith(color: cs.markColor)),
       isNullValue
           ? WidgetSpan(
               child: Container(
@@ -76,15 +76,13 @@ class KeyValueTile extends StatelessWidget {
                 ),
                 child: Text(
                   value,
-                  style: ss.valuesStyle.copyWith(color: valueColor(context)),
+                  style: ss.valuesStyle?.copyWith(color: valueColor(context)),
                 ),
               ),
             )
           : _ValueSpan(
               value: value,
-              style: ss.valuesStyle.copyWith(
-                color: valueColor(context),
-              ),
+              style: ss.valuesStyle?.copyWith(color: valueColor(context)),
             ),
     ];
 

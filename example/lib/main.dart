@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage>
       body: JsonConfig(
         data: JsonConfigData(
           style: JsonStyleScheme(
-            quotation: '">',
+            quotation: JsonQuotation(leftQuote: '<', rightQuote: '>'),
           ),
           color: JsonColorScheme(
             nullBackground: const Color(0xFFEBEBEB),

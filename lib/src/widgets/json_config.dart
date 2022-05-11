@@ -37,7 +37,7 @@ class JsonConfig extends InheritedWidget {
     if (current == null) {
       return JsonConfig(
         color: defaultColor(context),
-        itemPadding: EdgeInsets.only(left: 8),
+        itemPadding: const EdgeInsets.only(left: 8),
         styles: defaultStyle(context),
       );
     } else {
@@ -49,7 +49,7 @@ class JsonConfig extends InheritedWidget {
         chain = chain.copyWith(styles: defaultStyle(context));
       }
       if (current.itemPadding == null) {
-        chain = chain.copyWith(itemPadding: EdgeInsets.only(left: 8));
+        chain = chain.copyWith(itemPadding: const EdgeInsets.only(left: 8));
       }
       return chain;
     }
@@ -66,7 +66,8 @@ class JsonConfig extends InheritedWidget {
   }
 
   /// default style scheme
-  static JsonStyleScheme defaultStyle(BuildContext context) => JsonStyleScheme(
+  static JsonStyleScheme defaultStyle(BuildContext context) =>
+      const JsonStyleScheme(
         keysStyle: TextStyle(),
         valuesStyle: TextStyle(),
       );

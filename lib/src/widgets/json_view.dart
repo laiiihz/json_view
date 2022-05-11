@@ -47,7 +47,7 @@ class JsonView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (json is! Map && json is! List) {
-      return Text('unsupport type');
+      return const Text('unsupport type');
     }
     late IndexedWidgetBuilder builder;
     late int count;
@@ -93,7 +93,7 @@ class JsonViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (json is! Map && json is! List) {
-      return Text('unsupport type');
+      return const Text('unsupport type');
     }
     late List<Widget> items;
     if (json is Map) {
@@ -121,7 +121,7 @@ Widget getParsedItem(
   if (value is num) return NumTile(keyName: key, value: value);
   if (value is bool) return BoolTile(keyName: key, value: value);
   if (value is String) return StringTile(keyName: key, value: value);
-  if (value is List)
+  if (value is List) {
     return ListTile(
       keyName: key,
       items: value,
@@ -129,14 +129,16 @@ Widget getParsedItem(
       expanded: openAtStart,
       arrow: arrow,
     );
-  if (value is Map)
+  }
+  if (value is Map) {
     return MapTile(
       keyName: key,
       items: value.entries.toList(),
       expanded: openAtStart,
       arrow: arrow,
     );
-  return Text('unsupport type');
+  }
+  return const  Text('unsupport type');
 }
 
 /// get a tile Widget from value & index

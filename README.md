@@ -1,10 +1,15 @@
 # json_view
 
+![Pub Version](https://img.shields.io/pub/v/json_view)
+![Pub Popularity](https://img.shields.io/pub/popularity/json_view)
+![Pub Points](https://img.shields.io/pub/points/json_view)
+![Pub Publisher](https://img.shields.io/pub/publisher/json_view)
+
 A json preview package that has a not bad performance. 
 lazy load json tree node that cause less jank. 
 Support display large list json data like chrome dev tool.
 
-![preview](./resources/preview.png)
+![./resources/preview.png](https://raw.githubusercontent.com/laiiihz/json_view/Main/resources/preview.png)
 
 ## Highlight
 
@@ -24,8 +29,16 @@ JsonView(json: data)
 
 ```dart
 JsonConfig(
-    /// your customize color scheme
-    color: JsonColorScheme(...),
+    /// your customize configuration
+    data: JsonConfigData(
+        animation: true,
+        animationDuration: Duration(millseconds: 300),
+        animationCurve: Curves.ease,
+        itemPadding: EdgeInsets.only(left: 8),
+        color: JsonColorScheme(
+            stringColor: Colors.grey,
+        ),
+    ),
     /// any widget will contain jsonView
     child: ...,
 )

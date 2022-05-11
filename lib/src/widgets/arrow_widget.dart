@@ -1,52 +1,59 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
+import 'dart:math' as math;
 import '../painters/arrow_painter.dart';
 import 'json_config.dart';
 
-enum ArrowDirection {
-  left,
-  right,
-  up,
-  down,
-}
-
 class ArrowWidget extends StatelessWidget {
   final VoidCallback? onTap;
-  final ArrowDirection direction;
-  const ArrowWidget(
-      {Key? key, this.onTap, this.direction = ArrowDirection.right})
-      : super(key: key);
-  int get _turn {
-    switch (direction) {
-      case ArrowDirection.left:
-        return 2;
-      case ArrowDirection.right:
-        return 0;
-      case ArrowDirection.up:
-        return 3;
-      case ArrowDirection.down:
-        return 1;
-    }
-  }
+  final bool expanded;
+  final Widget? customArrow;
+
+  const ArrowWidget({
+    Key? key,
+    this.onTap,
+    this.expanded = false,
+    this.customArrow,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final JsonConfig config = JsonConfig.of(context);
-    final cs = config.color!;
+    final JsonConfigData config = JsonConfig.of(context);
+    final cs = config.color ?? JsonConfigData.defaultColor(context);
+    late Widget _arrow;
+
+    if (customArrow != null) {
+      _arrow = IconTheme(
+        data: IconThemeData(color: cs.normalColor, size: 16),
+        child: customArrow!,
+      );
+    } else {
+      _arrow = CustomPaint(
+        painter: ArrowPainter(color: cs.markColor ?? Colors.black),
+        size: const Size(16, 16),
+      );
+    }
+
+    if (config.animation ?? JsonConfigData.kUseAnimation) {
+      _arrow = AnimatedRotation(
+        turns: expanded ? .25 : 0,
+        duration: config.animationDuration ?? JsonConfigData.kAnimationDuration,
+        curve: config.animationCurve ?? JsonConfigData.kAnimationCurve,
+        child: _arrow,
+      );
+    } else {
+      _arrow = Transform.rotate(
+        angle: expanded ? .25 * math.pi * 2.0 : 0,
+        child: _arrow,
+      );
+    }
+
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: onTap,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
-        child: RotatedBox(
-          quarterTurns: _turn,
-          child: CustomPaint(
-            painter: ArrowPainter(
-              color: cs.markColor,
-            ),
-            size: const Size(8, 8),
-          ),
-        ),
+        child: _arrow,
       ),
     );
   }

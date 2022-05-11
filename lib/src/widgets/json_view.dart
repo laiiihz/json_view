@@ -24,8 +24,8 @@ class JsonView extends StatelessWidget {
   /// {@macro flutter.widgets.scroll_view.controller}
   final ScrollController? controller;
 
-  /// if true map will be open as default
-  final bool openAtStart;
+  // if true map will be open as default
+  // TODO add openAtStart, this will also cause some performance issue
 
   /// arrow widget
   final Widget? arrow;
@@ -40,7 +40,6 @@ class JsonView extends StatelessWidget {
     this.padding,
     this.physics,
     this.controller,
-    this.openAtStart = false,
     this.arrow,
   }) : super(key: key);
 
@@ -59,7 +58,7 @@ class JsonView extends StatelessWidget {
         return getParsedItem(
           key,
           item.value,
-          openAtStart,
+          false,
           arrow,
         );
       };
@@ -68,7 +67,7 @@ class JsonView extends StatelessWidget {
       final items = json as List;
       builder = (context, index) {
         final item = items[index];
-        return getIndexedItem(index, item, openAtStart, arrow);
+        return getIndexedItem(index, item, false, arrow);
       };
       count = items.length;
     }
@@ -87,8 +86,15 @@ class JsonViewBody extends StatelessWidget {
   /// {@macro json_view.json_view.json}
   final dynamic json;
 
+  /// same as column crossAxisAlignment
+  final CrossAxisAlignment crossAxisAlignment;
+
   /// use with caution, it will cause performance issue when json root items is too large
-  const JsonViewBody({Key? key, required this.json}) : super(key: key);
+  const JsonViewBody({
+    Key? key,
+    required this.json,
+    this.crossAxisAlignment = CrossAxisAlignment.center,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +112,10 @@ class JsonViewBody extends StatelessWidget {
         return getIndexedItem(0, item);
       }).toList();
     }
-    return Column(children: items);
+    return Column(
+      crossAxisAlignment: crossAxisAlignment,
+      children: items,
+    );
   }
 }
 

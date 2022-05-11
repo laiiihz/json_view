@@ -33,7 +33,7 @@ Map<String, dynamic> getJsonData() {
       'largeText':
           '  sedi tempero lemiscus poena tenus corrumpo Inda incredibilis centum putus dulcedo medius quarum aliquotiens opprobrium promptus carbo tendo. minimus non ius instructus uberrime extorqueo praetorgredior consto do cotidie compleo protraho exercitus poena frango Brocherota subvenio fidens Werumensium decet. presumo indigeo forsit directus infortunium neque vulgaris conturbo plagiarius socius Berlinmonte innotesco facina praemo itaque sequi.',
       'largeList': List.generate(
-        230 * 100 * 100,
+        230 * 100 * 100 + 32,
         (index) => {'index': index},
       ),
     },

@@ -25,20 +25,19 @@ class KeyValueTile extends StatelessWidget {
   final String value;
   final Widget? leading;
   final VoidCallback? onTap;
-  final Widget valueWidget;
   const KeyValueTile(
       {Key? key,
       required this.keyName,
       required this.value,
-      this.valueWidget = const SizedBox(),
       this.leading,
       this.onTap})
       : super(key: key);
 
   JsonColorScheme colorScheme(BuildContext context) =>
-      JsonConfig.of(context).color!;
+      JsonConfig.of(context).color ?? JsonConfigData.defaultColor(context);
 
-  Color valueColor(BuildContext context) => colorScheme(context).normalColor;
+  Color valueColor(BuildContext context) =>
+      colorScheme(context).normalColor ?? Colors.black;
 
   @override
   Widget build(BuildContext context) {
@@ -50,32 +49,18 @@ class KeyValueTile extends StatelessWidget {
       _ValueSpan(
           value: ' $value', style: TextStyle(color: valueColor(context))),
     ];
-
     final text = SelectableText.rich(
       TextSpan(children: spans),
       onTap: onTap,
     );
     if (leading == null) {
-      return Padding(padding: EdgeInsets.only(left: 8), child: text);
+      return Padding(padding: EdgeInsets.only(left: 16), child: text);
     } else {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(child: leading),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(top: 4),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  text,
-                  valueWidget,
-                ],
-              ),
-            ),
-          ),
+          leading!,
+          Expanded(child: text),
         ],
       );
     }
@@ -88,7 +73,8 @@ class NullTile extends KeyValueTile {
       : super(key: key, keyName: keyName, value: 'null');
 
   @override
-  Color valueColor(BuildContext context) => colorScheme(context).nullColor;
+  Color valueColor(BuildContext context) =>
+      colorScheme(context).nullColor ?? Colors.black;
 }
 
 class NumTile extends KeyValueTile {
@@ -96,7 +82,8 @@ class NumTile extends KeyValueTile {
       : super(keyName: keyName, value: '$value');
 
   @override
-  Color valueColor(BuildContext context) => colorScheme(context).numColor;
+  Color valueColor(BuildContext context) =>
+      colorScheme(context).numColor ?? Colors.black;
 }
 
 class BoolTile extends KeyValueTile {
@@ -104,7 +91,8 @@ class BoolTile extends KeyValueTile {
       : super(keyName: keyName, value: '$value');
 
   @override
-  Color valueColor(BuildContext context) => colorScheme(context).boolColor;
+  Color valueColor(BuildContext context) =>
+      colorScheme(context).boolColor ?? Colors.black;
 }
 
 class StringTile extends KeyValueTile {
@@ -112,5 +100,6 @@ class StringTile extends KeyValueTile {
       : super(keyName: keyName, value: '"$value"');
 
   @override
-  Color valueColor(BuildContext context) => colorScheme(context).stringColor;
+  Color valueColor(BuildContext context) =>
+      colorScheme(context).stringColor ?? Colors.black;
 }

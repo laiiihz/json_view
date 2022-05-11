@@ -1,4 +1,8 @@
-# CHANGELOG
+## 0.3.1
+
+* BREAKING CHANGE: new json configuration (see README.md)
+* add animations. @P-B1101
+* add custom arrow Widget. @P-B1101
 
 ## 0.2.1
 

@@ -38,17 +38,29 @@ class KeyValueTile extends StatelessWidget {
   JsonColorScheme colorScheme(BuildContext context) =>
       JsonConfig.of(context).color!;
 
+  JsonStyleScheme styleScheme(BuildContext context) =>
+      JsonConfig.of(context).styles!;
+
   Color valueColor(BuildContext context) => colorScheme(context).normalColor;
+
+  TextStyle valueStyle(BuildContext context) =>
+      styleScheme(context).valuesStyle;
 
   @override
   Widget build(BuildContext context) {
     // cs stand for colorScheme
     final cs = colorScheme(context);
+    // cs stand for styleScheme
+    final ss = styleScheme(context);
     final spans = <InlineSpan>[
-      _KeySpan(key: keyName, style: TextStyle(color: cs.normalColor)),
-      _ColonSpan(style: TextStyle(color: cs.markColor)),
+      _KeySpan(
+          key: ss.addDoubleQuotation ? '"$keyName" ' : '$keyName ',
+          style: ss.keysStyle.copyWith(color: cs.normalColor)),
+      _ColonSpan(style: ss.keysStyle.copyWith(color: cs.markColor)),
       _ValueSpan(
-          value: ' $value', style: TextStyle(color: valueColor(context))),
+        value: ' $value',
+        style: ss.valuesStyle.copyWith(color: valueColor(context)),
+      ),
     ];
 
     final text = SelectableText.rich(

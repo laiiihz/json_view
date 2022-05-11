@@ -51,19 +51,22 @@ class _HomePageState extends State<HomePage>
           controller: _tabController,
         ),
       ),
-      body: TabBarView(
-        children: [
-          JsonView(
-            json: getJsonData(),
-            openAtStart: true,
-            arrow: Icon(Icons.arrow_drop_down_rounded),
-          ),
-          JsonView(
-            json: listJsonData(),
-            arrow: Icon(Icons.arrow_drop_down_rounded),
-          ),
-        ],
-        controller: _tabController,
+      body: JsonConfig(
+        styles: JsonStyleScheme(addDoubleQuotation: true),
+        child: TabBarView(
+          children: [
+            JsonView(
+              json: getJsonData(),
+              openAtStart: true,
+              arrow: Icon(Icons.arrow_drop_down_rounded),
+            ),
+            JsonView(
+              json: listJsonData(),
+              arrow: Icon(Icons.arrow_drop_down_rounded),
+            ),
+          ],
+          controller: _tabController,
+        ),
       ),
     );
   }

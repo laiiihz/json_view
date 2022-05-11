@@ -24,6 +24,12 @@ class JsonView extends StatelessWidget {
   /// {@macro flutter.widgets.scroll_view.controller}
   final ScrollController? controller;
 
+  /// if true map will be open as default
+  final bool openAtStart;
+
+  /// arrow widget
+  final Widget? arrow;
+
   /// provider a json view, build with listview
   ///
   /// see more [JsonConfig] to customize the view
@@ -34,6 +40,8 @@ class JsonView extends StatelessWidget {
     this.padding,
     this.physics,
     this.controller,
+    this.openAtStart = false,
+    this.arrow,
   }) : super(key: key);
 
   @override
@@ -48,14 +56,19 @@ class JsonView extends StatelessWidget {
       builder = (context, index) {
         final item = items[index];
         final key = item.key;
-        return getParsedItem(key, item.value);
+        return getParsedItem(
+          key,
+          item.value,
+          openAtStart,
+          arrow,
+        );
       };
       count = items.length;
     } else if (json is List) {
       final items = json as List;
       builder = (context, index) {
         final item = items[index];
-        return getIndexedItem(index, item);
+        return getIndexedItem(index, item, openAtStart, arrow);
       };
       count = items.length;
     }
@@ -98,7 +111,12 @@ class JsonViewBody extends StatelessWidget {
 }
 
 /// get a tile Widget from value & key
-Widget getParsedItem(String key, dynamic value) {
+Widget getParsedItem(
+  String key,
+  dynamic value, [
+  bool openAtStart = false,
+  Widget? arrow,
+]) {
   if (value == null) return NullTile(keyName: key);
   if (value is num) return NumTile(keyName: key, value: value);
   if (value is bool) return BoolTile(keyName: key, value: value);
@@ -108,12 +126,25 @@ Widget getParsedItem(String key, dynamic value) {
       keyName: key,
       items: value,
       range: IndexRange(start: 0, end: value.length - 1),
+      expanded: openAtStart,
+      arrow: arrow,
     );
-  if (value is Map) return MapTile(keyName: key, items: value.entries.toList());
+  if (value is Map)
+    return MapTile(
+      keyName: key,
+      items: value.entries.toList(),
+      expanded: openAtStart,
+      arrow: arrow,
+    );
   return Text('unsupport type');
 }
 
 /// get a tile Widget from value & index
-Widget getIndexedItem(int index, dynamic value) {
-  return getParsedItem('[$index]', value);
+Widget getIndexedItem(
+  int index,
+  dynamic value, [
+  bool openAtStart = false,
+  Widget? arrow,
+]) {
+  return getParsedItem('[$index]', value, openAtStart, arrow);
 }

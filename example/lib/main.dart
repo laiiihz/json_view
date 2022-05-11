@@ -3,10 +3,12 @@ import 'package:json_view/json_view.dart';
 import 'json_data.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -16,13 +18,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
       ),
       darkTheme: ThemeData.dark(),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -44,7 +46,7 @@ class _HomePageState extends State<HomePage>
       appBar: AppBar(
         title: const Text('JSON VIEW'),
         bottom: TabBar(
-          tabs: [
+          tabs: const [
             Tab(text: 'Map'),
             Tab(text: 'List'),
           ],
@@ -53,10 +55,10 @@ class _HomePageState extends State<HomePage>
       ),
       body: JsonConfig(
         data: JsonConfigData(
-          style: JsonStyleScheme(
+          style: const JsonStyleScheme(
             quotation: JsonQuotation.same('"'),
           ),
-          color: JsonColorScheme(
+          color: const JsonColorScheme(
             nullColor: Colors.teal,
             boolColor: Colors.blue,
             numColor: Colors.green,
@@ -70,41 +72,16 @@ class _HomePageState extends State<HomePage>
           children: [
             JsonView(
               json: getJsonData(),
-              arrow: Icon(Icons.arrow_right_rounded),
+              arrow: const Icon(Icons.arrow_right_rounded),
             ),
             JsonView(
               json: listJsonData(),
-              arrow: Icon(Icons.arrow_right_rounded),
+              arrow: const Icon(Icons.arrow_right_rounded),
             ),
           ],
           controller: _tabController,
         ),
       ),
-    );
-  }
-}
-
-class Item extends StatefulWidget {
-  final int index;
-  final VoidCallback onTap;
-  Item({Key? key, required this.index, required this.onTap}) : super(key: key);
-
-  @override
-  _ItemState createState() => _ItemState();
-}
-
-class _ItemState extends State<Item> {
-  @override
-  void initState() {
-    super.initState();
-    print('build${widget.index}');
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      onTap: widget.onTap,
-      title: Text(widget.index.toString()),
     );
   }
 }

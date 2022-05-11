@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../models/json_color_scheme.dart';
 import '../models/json_config_data.dart';
 
 class JsonConfig extends InheritedWidget {

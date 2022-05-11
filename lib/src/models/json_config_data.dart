@@ -68,7 +68,7 @@ class JsonConfigData {
       const JsonStyleScheme(
         keysStyle: TextStyle(),
         valuesStyle: TextStyle(),
-        quotation: null,
+        quotation: JsonQuotation(),
       );
 
   JsonConfigData copyWith({

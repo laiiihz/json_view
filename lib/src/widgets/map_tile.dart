@@ -69,7 +69,6 @@ class _MapTileState extends State<MapTile> {
                   return getParsedItem(
                     item.key,
                     item.value,
-                    false,
                     widget.arrow,
                   );
                 }).toList(),

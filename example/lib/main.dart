@@ -71,11 +71,11 @@ class _HomePageState extends State<HomePage>
             JsonView(
               json: getJsonData(),
               openAtStart: true,
-              arrow: Icon(Icons.arrow_drop_down_rounded),
+              arrow: Icon(Icons.arrow_right_rounded),
             ),
             JsonView(
               json: listJsonData(),
-              arrow: Icon(Icons.arrow_drop_down_rounded),
+              arrow: Icon(Icons.arrow_right_rounded),
             ),
           ],
           controller: _tabController,

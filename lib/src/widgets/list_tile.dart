@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../cubit/expansion_cubit.dart';
 import 'arrow_widget.dart';
 import 'json_config.dart';
 import 'json_view.dart';
@@ -38,57 +36,32 @@ class ListTile extends StatefulWidget {
 }
 
 class _ListTileState extends State<ListTile> {
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ExpansionCubit(widget.expanded),
-      child: _ListTile(
-        keyName: widget.keyName,
-        items: widget.items,
-        arrow: widget.arrow,
-        range: widget.range,
-        isExpanded: widget.expanded,
-      ),
-    );
+  late bool _expanded = widget.expanded;
+
+  String get _value {
+    if (widget.items.isEmpty) return '[]';
+    if (_expanded) return '';
+    if (widget.items.length == 1) return '[0]';
+    if (widget.items.length == 2) return '[0,1]';
+    return '[${widget.range.start} ... ${widget.range.end}]';
   }
-}
 
-class _ListTile extends StatelessWidget {
-  final String keyName;
-  final List items;
-  final IndexRange range;
-  final Widget? arrow;
-  final bool isExpanded;
-
-  const _ListTile({
-    Key? key,
-    required this.keyName,
-    required this.items,
-    required this.range,
-    required this.arrow,
-    required this.isExpanded,
-  }) : super(key: key);
-
-  // String get _value {
-  //   if (items.isEmpty) return '[]';
-  //   if (_expanded) return '';
-  //   if (widget.items.length == 1) return '[0]';
-  //   if (widget.items.length == 2) return '[0,1]';
-  //   return '[${widget.range.start} ... ${widget.range.end}]';
-  // }
-
-  void _changeState(BuildContext context) {
-    if (items.isNotEmpty) context.read<ExpansionCubit>().toogleExpansion();
+  void _changeState() {
+    if (widget.items.isNotEmpty) {
+      setState(() {
+        _expanded = !_expanded;
+      });
+    }
   }
 
   List<Widget> get _children {
-    if (items.isEmpty) return [];
+    if (widget.items.isEmpty) return [];
 
     //GAP 100
-    if (range.length < 100) {
+    if (widget.range.length < 100) {
       final result = <Widget>[];
-      for (var i = 0; i <= range.length; i++) {
-        result.add(getIndexedItem(i, items[i], false, arrow));
+      for (var i = 0; i <= widget.range.length; i++) {
+        result.add(getIndexedItem(i, widget.items[i], false, widget.arrow));
       }
       return result;
     }
@@ -97,39 +70,39 @@ class _ListTile extends StatelessWidget {
 
   List<Widget> get _gapChildren {
     int gap = 100;
-    while (range.length / gap > 100) {
+    while (widget.range.length / gap > 100) {
       gap *= 100;
     }
-    int divide = range.length ~/ gap;
+    int divide = widget.range.length ~/ gap;
     int dividedLength = gap * divide;
     late int gapSize;
-    if (dividedLength == items.length) {
+    if (dividedLength == widget.items.length) {
       gapSize = divide;
     } else {
       gapSize = divide + 1;
     }
     final _result = <Widget>[];
     for (var i = 0; i < gapSize; i++) {
-      int startIndex = range.start + i * gap;
-      int endIndex = range.end;
+      int startIndex = widget.range.start + i * gap;
+      int endIndex = widget.range.end;
       if (i != gapSize - 1) {
         _result.add(
           ListTile(
             keyName: '[$i]',
-            items: items,
+            items: widget.items,
             range: IndexRange(start: startIndex, end: startIndex + gap - 1),
-            arrow: arrow,
-            expanded: isExpanded,
+            arrow: widget.arrow,
+            expanded: _expanded,
           ),
         );
       } else {
         _result.add(
           ListTile(
             keyName: '[$i]',
-            items: items,
+            items: widget.items,
             range: IndexRange(start: startIndex, end: endIndex),
-            arrow: arrow,
-            expanded: isExpanded,
+            arrow: widget.arrow,
+            expanded: _expanded,
           ),
         );
       }
@@ -148,39 +121,28 @@ class _ListTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BlocBuilder<ExpansionCubit, ExpansionState>(
-            builder: (context, state) => KeyValueTile(
-              keyName: keyName,
-              value: () {
-                if (items.isEmpty) return '[]';
-                if (state.isExpanded) return '';
-                if (items.length == 1) return '[0]';
-                if (items.length == 2) return '[0,1]';
-                return '[${range.start} ... ${range.end}]';
-              }(),
-              onTap: () => _changeState(context),
-              leading: items.isEmpty ? null : _arrowWidget,
-              valueWidget: state.isExpanded
-                  ? Padding(
-                      padding: jsonConfig.itemPadding!,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: _children,
-                      ),
-                    )
-                  : const SizedBox(),
-            ),
+          KeyValueTile(
+            keyName: widget.keyName,
+            value: _value,
+            onTap: _changeState,
+            leading: widget.items.isEmpty
+                ? null
+                : ArrowWidget(
+                    expanded: _expanded,
+                    onTap: _changeState,
+                    customArrow: widget.arrow,
+                  ),
           ),
+          if (_expanded)
+            Padding(
+              padding: jsonConfig.itemPadding!,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: _children,
+              ),
+            ),
         ],
       ),
     );
   }
-
-  Widget get _arrowWidget => BlocBuilder<ExpansionCubit, ExpansionState>(
-        builder: (context, state) => ArrowWidget(
-          expanded: state.isExpanded,
-          onTap: () => _changeState(context),
-          customArrow: arrow,
-        ),
-      );
 }

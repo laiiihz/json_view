@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../json_view.dart';
-import '../cubit/expansion_cubit.dart';
 import 'arrow_widget.dart';
 import 'simple_tiles.dart';
 
@@ -24,34 +22,20 @@ class MapTile extends StatefulWidget {
 }
 
 class _MapTileState extends State<MapTile> {
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider<ExpansionCubit>(
-      create: (context) => ExpansionCubit(widget.expanded),
-      child: _MapTile(
-        keyName: widget.keyName,
-        items: widget.items,
-        arrow: widget.arrow,
-      ),
-    );
-  }
-}
+  late bool _expanded = widget.expanded;
 
-class _MapTile extends StatelessWidget {
-  final String keyName;
-  final List<MapEntry> items;
-  final Widget? arrow;
-  const _MapTile({
-    Key? key,
-    required this.keyName,
-    required this.items,
-    required this.arrow,
-  }) : super(key: key);
-
-  void _changeState(BuildContext context) {
-    if (items.isNotEmpty) {
-      context.read<ExpansionCubit>().toogleExpansion();
+  _changeState() {
+    if (mounted && widget.items.isNotEmpty) {
+      setState(() {
+        _expanded = !_expanded;
+      });
     }
+  }
+
+  String get _value {
+    if (widget.items.isEmpty) return '{}';
+    if (_expanded) return '';
+    return '{ ... }';
   }
 
   @override
@@ -64,44 +48,35 @@ class _MapTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BlocBuilder<ExpansionCubit, ExpansionState>(
-            builder: (context, state) => KeyValueTile(
-              keyName: keyName,
-              value: () {
-                if (items.isEmpty) return '{}';
-                if (state.isExpanded) return '';
-                return '{ ... }';
-              }(),
-              onTap: () => _changeState(context),
-              leading: items.isEmpty ? null : _arrowWidget,
-              valueWidget: state.isExpanded
-                  ? Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: items.map((item) {
-                          return getParsedItem(
-                            item.key,
-                            item.value,
-                            false,
-                            arrow,
-                          );
-                        }).toList(),
-                      ),
-                    )
-                  : const SizedBox(),
-            ),
+          KeyValueTile(
+            keyName: widget.keyName,
+            value: _value,
+            onTap: _changeState,
+            leading: widget.items.isEmpty
+                ? null
+                : ArrowWidget(
+                    expanded: _expanded,
+                    onTap: _changeState,
+                    customArrow: widget.arrow,
+                  ),
           ),
+          if (_expanded)
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: widget.items.map((item) {
+                  return getParsedItem(
+                    item.key,
+                    item.value,
+                    false,
+                    widget.arrow,
+                  );
+                }).toList(),
+              ),
+            ),
         ],
       ),
     );
   }
-
-  Widget get _arrowWidget => BlocBuilder<ExpansionCubit, ExpansionState>(
-        builder: (context, state) => ArrowWidget(
-          expanded: state.isExpanded,
-          onTap: () => _changeState(context),
-          customArrow: arrow,
-        ),
-      );
 }

@@ -24,8 +24,8 @@ class JsonView extends StatelessWidget {
   /// {@macro flutter.widgets.scroll_view.controller}
   final ScrollController? controller;
 
-  /// if true map will be open as default
-  final bool openAtStart;
+  // if true map will be open as default
+  // TODO add openAtStart, this will also cause some performance issue
 
   /// arrow widget
   final Widget? arrow;
@@ -40,7 +40,6 @@ class JsonView extends StatelessWidget {
     this.padding,
     this.physics,
     this.controller,
-    this.openAtStart = false,
     this.arrow,
   }) : super(key: key);
 
@@ -59,7 +58,6 @@ class JsonView extends StatelessWidget {
         return getParsedItem(
           key,
           item.value,
-          openAtStart,
           arrow,
         );
       };
@@ -68,7 +66,7 @@ class JsonView extends StatelessWidget {
       final items = json as List;
       builder = (context, index) {
         final item = items[index];
-        return getIndexedItem(index, item, openAtStart, arrow);
+        return getIndexedItem(index, item, arrow);
       };
       count = items.length;
     }
@@ -114,7 +112,6 @@ class JsonViewBody extends StatelessWidget {
 Widget getParsedItem(
   String key,
   dynamic value, [
-  bool openAtStart = false,
   Widget? arrow,
 ]) {
   if (value == null) return NullTile(keyName: key);
@@ -126,7 +123,7 @@ Widget getParsedItem(
       keyName: key,
       items: value,
       range: IndexRange(start: 0, end: value.length - 1),
-      expanded: openAtStart,
+      expanded: false,
       arrow: arrow,
     );
   }
@@ -134,19 +131,18 @@ Widget getParsedItem(
     return MapTile(
       keyName: key,
       items: value.entries.toList(),
-      expanded: openAtStart,
+      expanded: false,
       arrow: arrow,
     );
   }
-  return const  Text('unsupport type');
+  return const Text('unsupport type');
 }
 
 /// get a tile Widget from value & index
 Widget getIndexedItem(
   int index,
   dynamic value, [
-  bool openAtStart = false,
   Widget? arrow,
 ]) {
-  return getParsedItem('[$index]', value, openAtStart, arrow);
+  return getParsedItem('[$index]', value, arrow);
 }

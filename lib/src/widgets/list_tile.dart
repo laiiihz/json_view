@@ -61,7 +61,7 @@ class _ListTileState extends State<ListTile> {
     if (widget.range.length < 100) {
       final result = <Widget>[];
       for (var i = 0; i <= widget.range.length; i++) {
-        result.add(getIndexedItem(i, widget.items[i], false, widget.arrow));
+        result.add(getIndexedItem(i, widget.items[i], widget.arrow));
       }
       return result;
     }
@@ -92,7 +92,7 @@ class _ListTileState extends State<ListTile> {
             items: widget.items,
             range: IndexRange(start: startIndex, end: startIndex + gap - 1),
             arrow: widget.arrow,
-            expanded: _expanded,
+            expanded: widget.expanded,
           ),
         );
       } else {
@@ -102,7 +102,7 @@ class _ListTileState extends State<ListTile> {
             items: widget.items,
             range: IndexRange(start: startIndex, end: endIndex),
             arrow: widget.arrow,
-            expanded: _expanded,
+            expanded: widget.expanded,
           ),
         );
       }

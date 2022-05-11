@@ -54,23 +54,22 @@ class _HomePageState extends State<HomePage>
       body: JsonConfig(
         data: JsonConfigData(
           style: JsonStyleScheme(
-            quotation: JsonQuotation(leftQuote: '<', rightQuote: '>'),
+            quotation: JsonQuotation.same('"'),
           ),
           color: JsonColorScheme(
-            nullBackground: const Color(0xFFEBEBEB),
             nullColor: Colors.teal,
             boolColor: Colors.blue,
             numColor: Colors.green,
             stringColor: Colors.orange,
             normalColor: Colors.grey,
             markColor: Colors.black87,
+            nullBackground: Colors.white24,
           ),
         ),
         child: TabBarView(
           children: [
             JsonView(
               json: getJsonData(),
-              openAtStart: true,
               arrow: Icon(Icons.arrow_right_rounded),
             ),
             JsonView(

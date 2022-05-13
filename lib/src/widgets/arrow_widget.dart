@@ -21,31 +21,31 @@ class ArrowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final JsonConfigData config = JsonConfig.of(context);
     final cs = config.color ?? JsonConfigData.defaultColor(context);
-    late Widget _arrow;
+    late Widget arrow;
 
     if (customArrow != null) {
-      _arrow = IconTheme(
+      arrow = IconTheme(
         data: IconThemeData(color: cs.normalColor, size: 16),
         child: customArrow!,
       );
     } else {
-      _arrow = CustomPaint(
+      arrow = CustomPaint(
         painter: ArrowPainter(color: cs.markColor ?? Colors.black),
         size: const Size(16, 16),
       );
     }
 
     if (config.animation ?? JsonConfigData.kUseAnimation) {
-      _arrow = AnimatedRotation(
+      arrow = AnimatedRotation(
         turns: expanded ? .25 : 0,
         duration: config.animationDuration ?? JsonConfigData.kAnimationDuration,
         curve: config.animationCurve ?? JsonConfigData.kAnimationCurve,
-        child: _arrow,
+        child: arrow,
       );
     } else {
-      _arrow = Transform.rotate(
+      arrow = Transform.rotate(
         angle: expanded ? .25 * math.pi * 2.0 : 0,
-        child: _arrow,
+        child: arrow,
       );
     }
 
@@ -54,7 +54,7 @@ class ArrowWidget extends StatelessWidget {
       onTap: onTap,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
-        child: _arrow,
+        child: arrow,
       ),
     );
   }

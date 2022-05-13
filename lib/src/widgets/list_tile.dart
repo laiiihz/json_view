@@ -82,12 +82,12 @@ class _ListTileState extends State<ListTile> {
     } else {
       gapSize = divide + 1;
     }
-    final _result = <Widget>[];
+    final result = <Widget>[];
     for (var i = 0; i < gapSize; i++) {
       int startIndex = widget.range.start + i * gap;
       int endIndex = widget.range.end;
       if (i != gapSize - 1) {
-        _result.add(
+        result.add(
           ListTile(
             keyName: '[$i]',
             items: widget.items,
@@ -97,7 +97,7 @@ class _ListTileState extends State<ListTile> {
           ),
         );
       } else {
-        _result.add(
+        result.add(
           ListTile(
             keyName: '[$i]',
             items: widget.items,
@@ -108,7 +108,7 @@ class _ListTileState extends State<ListTile> {
         );
       }
     }
-    return _result;
+    return result;
   }
 
   @override

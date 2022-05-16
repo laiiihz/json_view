@@ -20,6 +20,7 @@ class JsonColorScheme {
   /// color for arrow & other widget
   final Color? markColor;
 
+  /// background color of null value.
   final Color? nullBackground;
 
   /// Json color scheme

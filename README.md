@@ -32,7 +32,7 @@ JsonConfig(
     /// your customize configuration
     data: JsonConfigData(
         animation: true,
-        animationDuration: Duration(millseconds: 300),
+        animationDuration: Duration(milliseconds: 300),
         animationCurve: Curves.ease,
         itemPadding: EdgeInsets.only(left: 8),
         color: JsonColorScheme(

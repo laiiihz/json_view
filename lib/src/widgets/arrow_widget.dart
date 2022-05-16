@@ -21,12 +21,17 @@ class ArrowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final JsonConfigData config = JsonConfig.of(context);
     final cs = config.color ?? JsonConfigData.defaultColor(context);
-    late Widget arrow;
+    Widget? arrow;
+    if (config.style == null) {
+      arrow = customArrow;
+    } else {
+      arrow = config.style!.copyWith(arrow: customArrow).arrow;
+    }
 
-    if (customArrow != null) {
+    if (arrow != null) {
       arrow = IconTheme(
         data: IconThemeData(color: cs.normalColor, size: 16),
-        child: customArrow!,
+        child: arrow,
       );
     } else {
       arrow = CustomPaint(

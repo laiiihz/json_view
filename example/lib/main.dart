@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage>
             numColor: Colors.green,
             stringColor: Colors.orange,
             normalColor: Colors.grey,
-            markColor: Colors.black87,
+            markColor: Colors.white70,
             nullBackground: Colors.white24,
           ),
         ),
@@ -72,7 +72,6 @@ class _HomePageState extends State<HomePage>
           children: [
             JsonView(
               json: getJsonData(),
-              arrow: const Icon(Icons.arrow_right_rounded),
             ),
             JsonView(
               json: listJsonData(),

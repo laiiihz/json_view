@@ -1,3 +1,8 @@
+## 0.3.2
+
+* add more quotation types. @laiiihz
+* custom arrowWidget on configuration. @laiiihz
+
 ## 0.3.1
 
 * fix quotations display. #7 @beroso

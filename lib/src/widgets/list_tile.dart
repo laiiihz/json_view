@@ -55,11 +55,11 @@ class _ListTileState extends State<ListTile> {
     }
   }
 
+  int get _gap => JsonConfig.of(context).gap ?? JsonConfigData.kGap;
+
   List<Widget> get _children {
     if (widget.items.isEmpty) return [];
-
-    //GAP 100
-    if (widget.range.length < 100) {
+    if (widget.range.length < _gap) {
       final result = <Widget>[];
       for (var i = 0; i <= widget.range.length; i++) {
         result.add(getIndexedItem(i, widget.items[i], widget.arrow));
@@ -70,12 +70,12 @@ class _ListTileState extends State<ListTile> {
   }
 
   List<Widget> get _gapChildren {
-    int gap = 100;
-    while (widget.range.length / gap > 100) {
-      gap *= 100;
+    int currentGap = _gap;
+    while (widget.range.length / currentGap > _gap) {
+      currentGap *= _gap;
     }
-    int divide = widget.range.length ~/ gap;
-    int dividedLength = gap * divide;
+    int divide = widget.range.length ~/ currentGap;
+    int dividedLength = currentGap * divide;
     late int gapSize;
     if (dividedLength == widget.items.length) {
       gapSize = divide;
@@ -84,14 +84,15 @@ class _ListTileState extends State<ListTile> {
     }
     final result = <Widget>[];
     for (var i = 0; i < gapSize; i++) {
-      int startIndex = widget.range.start + i * gap;
+      int startIndex = widget.range.start + i * currentGap;
       int endIndex = widget.range.end;
       if (i != gapSize - 1) {
         result.add(
           ListTile(
             keyName: '[$i]',
             items: widget.items,
-            range: IndexRange(start: startIndex, end: startIndex + gap - 1),
+            range:
+                IndexRange(start: startIndex, end: startIndex + currentGap - 1),
             arrow: widget.arrow,
             expanded: widget.expanded,
           ),

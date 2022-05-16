@@ -55,6 +55,7 @@ class _HomePageState extends State<HomePage>
       ),
       body: JsonConfig(
         data: JsonConfigData(
+          gap: 200,
           style: const JsonStyleScheme(
             quotation: JsonQuotation.same('"'),
           ),

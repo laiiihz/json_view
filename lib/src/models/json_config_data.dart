@@ -27,6 +27,9 @@ class JsonConfigData {
   /// only work with [animation] is true
   final Curve? animationCurve;
 
+  /// json list gap, default is 100
+  final int? gap;
+
   /// Json View Configuration Data
   JsonConfigData({
     this.color,
@@ -35,6 +38,7 @@ class JsonConfigData {
     this.animation,
     this.animationDuration,
     this.animationCurve,
+    this.gap,
   });
 
   /// default use animation
@@ -49,6 +53,8 @@ class JsonConfigData {
   /// default animation curve
   static const kAnimationCurve = Curves.easeInOutCubic;
 
+  static const kGap = 100;
+
   /// fallback JsonConfigData
   factory JsonConfigData.fallback(BuildContext context) {
     return JsonConfigData(
@@ -58,6 +64,7 @@ class JsonConfigData {
       itemPadding: kItemPadding,
       animationDuration: kAnimationDuration,
       animationCurve: kAnimationCurve,
+      gap: kGap,
     );
   }
 
@@ -89,6 +96,7 @@ class JsonConfigData {
     EdgeInsetsGeometry? itemPadding,
     Duration? animationDuration,
     Curve? animationCurve,
+    int? gap,
   }) {
     return JsonConfigData(
       color: this.color?.merge(color),
@@ -97,6 +105,7 @@ class JsonConfigData {
       itemPadding: itemPadding ?? this.itemPadding,
       animationDuration: animationDuration ?? this.animationDuration,
       animationCurve: animationCurve ?? this.animationCurve,
+      gap: gap ?? this.gap,
     );
   }
 
@@ -110,6 +119,7 @@ class JsonConfigData {
       itemPadding: data.itemPadding,
       animationDuration: data.animationDuration,
       animationCurve: data.animationCurve,
+      gap: data.gap,
     );
   }
 
@@ -122,7 +132,8 @@ class JsonConfigData {
         other.itemPadding == itemPadding &&
         other.animation == animation &&
         other.animationDuration == animationDuration &&
-        other.animationCurve == animationCurve;
+        other.animationCurve == animationCurve &&
+        other.gap == gap;
   }
 
   @override
@@ -131,5 +142,6 @@ class JsonConfigData {
         itemPadding,
         animationDuration,
         animationCurve,
+        gap,
       );
 }

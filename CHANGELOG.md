@@ -1,7 +1,8 @@
 ## 0.3.2
 
-* add more quotation types. @laiiihz
-* custom arrowWidget on configuration. @laiiihz
+* add more quotation types.
+* custom arrowWidget on configuration.
+* add custom gap on json list.
 
 ## 0.3.1
 
@@ -11,10 +12,10 @@
 
 * add animation (with duration & curves). @P-B1101
 * add null value background. @P-B1101
-* add more configuration. @laiiihz
+* add more configuration.
 * add key & value style. @P-B1101
 * custom arrow widget. @@P-B1101
-* global configuration for arrow(WIP). @laiiihz
+* global configuration for arrow(WIP).
 
 ## 0.2.1
 

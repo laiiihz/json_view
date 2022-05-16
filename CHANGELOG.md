@@ -1,4 +1,6 @@
-# CHANGELOG
+## 0.3.1
+
+* fix quotations display. #7 @beroso
 
 ## 0.3.0
 

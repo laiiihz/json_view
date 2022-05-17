@@ -4,6 +4,7 @@
 * custom arrowWidget on configuration.
 * add custom gap on json list.
 * `openAtStart` option. (original post #5)
+* fix null value text style
 
 ## 0.3.1
 

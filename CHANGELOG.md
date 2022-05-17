@@ -3,6 +3,7 @@
 * add more quotation types.
 * custom arrowWidget on configuration.
 * add custom gap on json list.
+* `openAtStart` option. (original post #5)
 
 ## 0.3.1
 

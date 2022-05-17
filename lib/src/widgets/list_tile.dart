@@ -62,7 +62,12 @@ class _ListTileState extends State<ListTile> {
     if (widget.range.length < _gap) {
       final result = <Widget>[];
       for (var i = 0; i <= widget.range.length; i++) {
-        result.add(getIndexedItem(i, widget.items[i], widget.arrow));
+        result.add(getIndexedItem(
+          index: i,
+          value: widget.items[i],
+          arrow: widget.arrow,
+          openAtStart: widget.expanded,
+        ));
       }
       return result;
     }

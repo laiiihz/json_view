@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage>
         bottom: TabBar(
           tabs: const [
             Tab(text: 'Map'),
+            Tab(text: 'Large List Json'),
             Tab(text: 'List'),
           ],
           controller: _tabController,
@@ -55,9 +56,12 @@ class _HomePageState extends State<HomePage>
       ),
       body: JsonConfig(
         data: JsonConfigData(
-          gap: 200,
+          gap: 100,
           style: const JsonStyleScheme(
             quotation: JsonQuotation.same('"'),
+            // set this to true to open all nodes at start
+            // use with caution, it will cause performance issue when json items is too large
+            openAtStart: false,
           ),
           color: const JsonColorScheme(
             nullColor: Colors.teal,
@@ -73,6 +77,9 @@ class _HomePageState extends State<HomePage>
           children: [
             JsonView(
               json: getJsonData(),
+            ),
+            JsonView(
+              json: largeJsonData(),
             ),
             JsonView(
               json: listJsonData(),

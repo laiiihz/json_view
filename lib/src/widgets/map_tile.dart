@@ -65,9 +65,10 @@ class _MapTileState extends State<MapTile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: widget.items.map((item) {
                 return getParsedItem(
-                  item.key,
-                  item.value,
-                  widget.arrow,
+                  key: item.key,
+                  value: item.value,
+                  arrow: widget.arrow,
+                  openAtStart: widget.expanded,
                 );
               }).toList(),
             ),

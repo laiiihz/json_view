@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:json_view/src/widgets/json_config.dart';
 
 import 'list_tile.dart';
 import 'map_tile.dart';
@@ -24,9 +25,6 @@ class JsonView extends StatelessWidget {
   /// {@macro flutter.widgets.scroll_view.controller}
   final ScrollController? controller;
 
-  // if true map will be open as default
-  // TODO add openAtStart, this will also cause some performance issue
-
   /// arrow widget
   final Widget? arrow;
 
@@ -45,6 +43,8 @@ class JsonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool openAtStart = JsonConfig.of(context).style?.openAtStart ?? false;
+
     if (json is! Map && json is! List) {
       return const Text('unsupport type');
     }
@@ -56,9 +56,10 @@ class JsonView extends StatelessWidget {
         final item = items[index];
         final key = item.key;
         return getParsedItem(
-          key,
-          item.value,
-          arrow,
+          key: key,
+          value: item.value,
+          arrow: arrow,
+          openAtStart: openAtStart,
         );
       };
       count = items.length;
@@ -66,7 +67,12 @@ class JsonView extends StatelessWidget {
       final items = json as List;
       builder = (context, index) {
         final item = items[index];
-        return getIndexedItem(index, item, arrow);
+        return getIndexedItem(
+          index: index,
+          value: item,
+          arrow: arrow,
+          openAtStart: openAtStart,
+        );
       };
       count = items.length;
     }
@@ -90,6 +96,8 @@ class JsonViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool openAtStart = JsonConfig.of(context).style?.openAtStart ?? false;
+
     if (json is! Map && json is! List) {
       return const Text('unsupport type');
     }
@@ -97,11 +105,15 @@ class JsonViewBody extends StatelessWidget {
     if (json is Map) {
       items = (json as Map).entries.map((entry) {
         final key = entry.key;
-        return getParsedItem(key, entry.value);
+        return getParsedItem(
+          key: key,
+          value: entry.value,
+          openAtStart: openAtStart,
+        );
       }).toList();
     } else if (json is List) {
       items = (json as List).map((item) {
-        return getIndexedItem(0, item);
+        return getIndexedItem(index: 0, value: item);
       }).toList();
     }
     return Column(children: items);
@@ -109,11 +121,12 @@ class JsonViewBody extends StatelessWidget {
 }
 
 /// get a tile Widget from value & key
-Widget getParsedItem(
-  String key,
-  dynamic value, [
+Widget getParsedItem({
+  required String key,
+  required dynamic value,
   Widget? arrow,
-]) {
+  bool openAtStart = false,
+}) {
   if (value == null) return NullTile(keyName: key);
   if (value is num) return NumTile(keyName: key, value: value);
   if (value is bool) return BoolTile(keyName: key, value: value);
@@ -123,7 +136,7 @@ Widget getParsedItem(
       keyName: key,
       items: value,
       range: IndexRange(start: 0, end: value.length - 1),
-      expanded: false,
+      expanded: openAtStart,
       arrow: arrow,
     );
   }
@@ -131,7 +144,7 @@ Widget getParsedItem(
     return MapTile(
       keyName: key,
       items: value.entries.toList(),
-      expanded: false,
+      expanded: openAtStart,
       arrow: arrow,
     );
   }
@@ -139,10 +152,16 @@ Widget getParsedItem(
 }
 
 /// get a tile Widget from value & index
-Widget getIndexedItem(
-  int index,
-  dynamic value, [
+Widget getIndexedItem({
+  required int index,
+  required dynamic value,
   Widget? arrow,
-]) {
-  return getParsedItem('[$index]', value, arrow);
+  bool openAtStart = false,
+}) {
+  return getParsedItem(
+    key: '[$index]',
+    value: value,
+    arrow: arrow,
+    openAtStart: openAtStart,
+  );
 }

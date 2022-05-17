@@ -61,7 +61,14 @@ class JsonStyleScheme {
   /// add double quotation on keys or not. default set to false
   final JsonQuotation? quotation;
 
+  /// the arrow widget
   final Widget? arrow;
+
+  /// default set to false, this may cause performance issue when rendering
+  /// large json list or map.
+  ///
+  /// use with `caution`
+  final bool? openAtStart;
 
   /// Json color scheme
   const JsonStyleScheme({
@@ -69,6 +76,7 @@ class JsonStyleScheme {
     this.valuesStyle = const TextStyle(),
     this.quotation = const JsonQuotation(),
     this.arrow,
+    this.openAtStart = false,
   });
 
   /// copy another JsonStyleScheme
@@ -77,12 +85,14 @@ class JsonStyleScheme {
     TextStyle? valuesStyle,
     JsonQuotation? quotation,
     Widget? arrow,
+    bool? openAtStart,
   }) {
     return JsonStyleScheme(
       keysStyle: keysStyle ?? this.keysStyle,
       valuesStyle: valuesStyle ?? this.valuesStyle,
       quotation: quotation ?? this.quotation,
       arrow: arrow ?? this.arrow,
+      openAtStart: openAtStart ?? this.openAtStart,
     );
   }
 
@@ -94,6 +104,7 @@ class JsonStyleScheme {
       valuesStyle: scheme.valuesStyle,
       quotation: scheme.quotation,
       arrow: scheme.arrow,
+      openAtStart: scheme.openAtStart,
     );
   }
 
@@ -105,7 +116,8 @@ class JsonStyleScheme {
         other.keysStyle == keysStyle &&
         other.valuesStyle == valuesStyle &&
         other.quotation == quotation &&
-        other.arrow == arrow;
+        other.arrow == arrow &&
+        other.openAtStart == openAtStart;
   }
 
   @override

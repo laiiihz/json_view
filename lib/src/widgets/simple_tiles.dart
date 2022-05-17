@@ -111,8 +111,14 @@ class NullTile extends KeyValueTile {
           valueBuilder: (context, value) {
             final config = JsonConfig.of(context);
             final color = config.color?.nullBackground;
+            TextStyle style = const TextStyle();
+            if (config.style?.valuesStyle != null) {
+              style = config.style!.valuesStyle!;
+            }
+            style =
+                style.copyWith(color: config.color?.normalColor ?? Colors.grey);
             if (color == null) {
-              return _ValueSpan(value: value);
+              return _ValueSpan(value: value, style: style);
             }
 
             return WidgetSpan(
@@ -123,13 +129,7 @@ class NullTile extends KeyValueTile {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: Text(
-                    value,
-                    style: config.style?.valuesStyle ??
-                        const TextStyle().copyWith(
-                          color: config.color?.normalColor ?? Colors.grey,
-                        ),
-                  ),
+                  child: Text(value, style: style),
                 ),
               ),
             );

@@ -106,11 +106,11 @@ const defaultLightColorScheme = JsonColorScheme(
 );
 
 /// default dark color scheme
-final defaultDarkColorScheme = JsonColorScheme(
-  nullColor: Colors.teal[200]!,
-  boolColor: Colors.blue[200]!,
-  numColor: Colors.green[200]!,
-  stringColor: Colors.orange[200]!,
+const defaultDarkColorScheme = JsonColorScheme(
+  nullColor: Colors.tealAccent,
+  boolColor: Colors.lightBlue,
+  numColor: Colors.lightGreen,
+  stringColor: Colors.orangeAccent,
   normalColor: Colors.grey,
   markColor: Colors.white70,
 );

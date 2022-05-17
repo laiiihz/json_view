@@ -6,8 +6,11 @@ import 'json_style_scheme.dart';
 /// Json View Configuration Data
 class JsonConfigData {
   /// color scheme of json view
+  ///
+  /// default is defaultDarkColorScheme & defaultLightColorScheme base on current theme
   final JsonColorScheme? color;
 
+  /// the style of json view
   final JsonStyleScheme? style;
 
   /// has animation

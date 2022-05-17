@@ -38,6 +38,11 @@ Map<String, dynamic> getJsonData() {
         'list_c': [
           {'a': 'test'}
         ],
+        'list_d': [1, 2],
+        'list_e': [
+          {'b': 'test'},
+          2
+        ],
       },
       'largeText':
           '  sedi tempero lemiscus poena tenus corrumpo Inda incredibilis centum putus dulcedo medius quarum aliquotiens opprobrium promptus carbo tendo. minimus non ius instructus uberrime extorqueo praetorgredior consto do cotidie compleo protraho exercitus poena frango Brocherota subvenio fidens Werumensium decet. presumo indigeo forsit directus infortunium neque vulgaris conturbo plagiarius socius Berlinmonte innotesco facina praemo itaque sequi.',

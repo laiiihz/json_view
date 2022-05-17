@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/json_color_scheme.dart';
 import '../models/json_style_scheme.dart';
 import '../painters/value_background_painter.dart';
+import 'arrow_widget.dart';
 import 'json_config.dart';
 
 typedef SpanBuilder = InlineSpan Function(BuildContext context, dynamic value);
@@ -34,50 +35,62 @@ class KeyValueTile extends StatelessWidget {
   final String value;
   final Widget? leading;
   final VoidCallback? onTap;
-
-  final SpanBuilder? valueBuilder;
   const KeyValueTile({
     Key? key,
     required this.keyName,
     required this.value,
-    this.valueBuilder,
     this.leading,
     this.onTap,
   }) : super(key: key);
 
   JsonColorScheme colorScheme(BuildContext context) =>
-      JsonConfig.of(context).color!;
+      JsonConfig.of(context).color ?? const JsonColorScheme();
 
   JsonStyleScheme styleScheme(BuildContext context) =>
-      JsonConfig.of(context).style!;
+      JsonConfig.of(context).style ?? const JsonStyleScheme();
 
   Color valueColor(BuildContext context) =>
       colorScheme(context).normalColor ?? Colors.black;
+
+  String parsedKeyName(BuildContext context) {
+    final quotation = styleScheme(context).quotation;
+    if (quotation == null || quotation.isEmpty) return keyName;
+    return '${quotation.leftQuote}$keyName${quotation.rightQuote}';
+  }
+
+  TextStyle keyStyle(BuildContext context) {
+    final ss = styleScheme(context);
+    if (ss.keysStyle == null) return const TextStyle();
+    return ss.keysStyle!;
+  }
+
+  TextStyle valueStyle(BuildContext context) {
+    final ss = styleScheme(context);
+    if (ss.valuesStyle == null) return const TextStyle();
+    return ss.valuesStyle!;
+  }
+
+  InlineSpan buildValue(BuildContext context) {
+    return _ValueSpan(
+      value: value,
+      style: valueStyle(context).copyWith(color: valueColor(context)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     // cs stand for colorScheme
     final cs = colorScheme(context);
-    // ss stand for styleScheme
-    final ss = styleScheme(context);
     final spans = <InlineSpan>[
       _KeySpan(
-        keyValue: ss.quotation == null
-            ? keyName
-            : '${ss.quotation!.leftQuote}$keyName${ss.quotation!.rightQuote}',
-        style: ss.keysStyle ??
-            const TextStyle().copyWith(color: cs.normalColor ?? Colors.grey),
+        keyValue: parsedKeyName(context),
+        style: keyStyle(context).copyWith(color: cs.normalColor ?? Colors.grey),
       ),
       _ColonSpan(
-        style: ss.keysStyle ??
-            const TextStyle().copyWith(color: cs.markColor ?? Colors.white70),
+        style:
+            keyStyle(context).copyWith(color: cs.markColor ?? Colors.white70),
       ),
-      valueBuilder == null
-          ? _ValueSpan(
-              value: value,
-              style: ss.valuesStyle?.copyWith(color: valueColor(context)),
-            )
-          : valueBuilder!(context, value),
+      buildValue(context),
     ];
 
     Widget result = SelectableText.rich(
@@ -101,44 +114,45 @@ class KeyValueTile extends StatelessWidget {
 }
 
 class NullTile extends KeyValueTile {
-  NullTile({
+  const NullTile({
     Key? key,
     required String keyName,
   }) : super(
           key: key,
           keyName: keyName,
           value: 'null',
-          valueBuilder: (context, value) {
-            final config = JsonConfig.of(context);
-            final color = config.color?.nullBackground;
-            TextStyle style = const TextStyle();
-            if (config.style?.valuesStyle != null) {
-              style = config.style!.valuesStyle!;
-            }
-            style =
-                style.copyWith(color: config.color?.normalColor ?? Colors.grey);
-            if (color == null) {
-              return _ValueSpan(value: value, style: style);
-            }
-
-            return WidgetSpan(
-              child: CustomPaint(
-                painter: ValueBackgroundPainter(
-                  color: color,
-                  radius: const Radius.circular(4),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: Text(value, style: style),
-                ),
-              ),
-            );
-          },
         );
 
   @override
   Color valueColor(BuildContext context) =>
       colorScheme(context).nullColor ?? Colors.teal;
+
+  @override
+  InlineSpan buildValue(BuildContext context) {
+    final config = JsonConfig.of(context);
+    final color = config.color?.nullBackground;
+    TextStyle style = const TextStyle();
+    if (config.style?.valuesStyle != null) {
+      style = config.style!.valuesStyle!;
+    }
+    style = style.copyWith(color: valueColor(context));
+    if (color == null) {
+      return _ValueSpan(value: value, style: style);
+    }
+
+    return WidgetSpan(
+      child: CustomPaint(
+        painter: ValueBackgroundPainter(
+          color: color,
+          radius: const Radius.circular(4),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: Text(value, style: style),
+        ),
+      ),
+    );
+  }
 }
 
 class NumTile extends KeyValueTile {
@@ -187,4 +201,28 @@ class StringTile extends KeyValueTile {
   @override
   Color valueColor(BuildContext context) =>
       colorScheme(context).stringColor ?? Colors.orange;
+}
+
+class MapListTile extends KeyValueTile {
+  MapListTile({
+    Key? key,
+    required String keyName,
+    required String value,
+    required VoidCallback onTap,
+    required bool showLeading,
+    required bool expanded,
+    required Widget? arrow,
+  }) : super(
+          key: key,
+          keyName: keyName,
+          value: value,
+          onTap: onTap,
+          leading: showLeading
+              ? ArrowWidget(
+                  expanded: expanded,
+                  onTap: onTap,
+                  customArrow: arrow,
+                )
+              : null,
+        );
 }

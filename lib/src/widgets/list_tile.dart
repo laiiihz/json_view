@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../models/json_config_data.dart';
-import 'arrow_widget.dart';
 import 'json_config.dart';
 import 'json_view.dart';
 import 'simple_tiles.dart';
@@ -123,17 +122,13 @@ class _ListTileState extends State<ListTile> {
     Widget result = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        KeyValueTile(
+        MapListTile(
           keyName: widget.keyName,
           value: _value,
           onTap: _changeState,
-          leading: widget.items.isEmpty
-              ? null
-              : ArrowWidget(
-                  expanded: _expanded,
-                  onTap: _changeState,
-                  customArrow: widget.arrow,
-                ),
+          expanded: _expanded,
+          showLeading: widget.items.isNotEmpty,
+          arrow: widget.arrow,
         ),
         if (_expanded)
           Padding(

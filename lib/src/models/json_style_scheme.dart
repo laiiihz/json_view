@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 /// JsonQuotation
 class JsonQuotation {
   /// left quote
-  final String leftQuote;
+  final String? leftQuote;
 
   /// right quote
-  final String rightQuote;
+  final String? rightQuote;
 
   /// Json Quotation
   ///
@@ -18,8 +18,8 @@ class JsonQuotation {
   ///
   /// [JsonQuotation.same] left and right quotation are same `<leftQuotation>some_key<rightQuotation>`
   const JsonQuotation({
-    this.leftQuote = '',
-    this.rightQuote = '',
+    this.leftQuote,
+    this.rightQuote,
   });
 
   /// left qoute and right qoute are same
@@ -37,6 +37,11 @@ class JsonQuotation {
   /// single quotation
   static JsonQuotation singleQuote = const JsonQuotation.same('\'');
 
+  bool get isEmpty =>
+      leftQuote != null &&
+      rightQuote != null &&
+      leftQuote!.isEmpty &&
+      rightQuote!.isEmpty;
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;

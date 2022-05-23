@@ -132,7 +132,7 @@ class _ListTileState extends State<ListTile> {
         ),
         if (_expanded)
           Padding(
-            padding: jsonConfig.itemPadding!,
+            padding: jsonConfig.itemPadding ?? const EdgeInsets.only(left: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: _children,

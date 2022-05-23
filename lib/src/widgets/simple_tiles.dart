@@ -8,23 +8,23 @@ import 'json_config.dart';
 
 typedef SpanBuilder = InlineSpan Function(BuildContext context, dynamic value);
 
-class _ColonSpan extends TextSpan {
-  const _ColonSpan({
+class ColonSpan extends TextSpan {
+  const ColonSpan({
     TextStyle? style,
   }) : super(text: ' : ', style: style);
 }
 
-class _KeySpan extends TextSpan {
+class KeySpan extends TextSpan {
   final String keyValue;
-  const _KeySpan({
+  const KeySpan({
     required this.keyValue,
     TextStyle? style,
   }) : super(text: keyValue, style: style);
 }
 
-class _ValueSpan extends TextSpan {
+class ValueSpan extends TextSpan {
   final String value;
-  const _ValueSpan({
+  const ValueSpan({
     required this.value,
     TextStyle? style,
   }) : super(text: value, style: style);
@@ -35,12 +35,14 @@ class KeyValueTile extends StatelessWidget {
   final String value;
   final Widget? leading;
   final VoidCallback? onTap;
+  final int? maxLines;
   const KeyValueTile({
     Key? key,
     required this.keyName,
     required this.value,
     this.leading,
     this.onTap,
+    this.maxLines,
   }) : super(key: key);
 
   JsonColorScheme colorScheme(BuildContext context) =>
@@ -53,8 +55,8 @@ class KeyValueTile extends StatelessWidget {
       colorScheme(context).normalColor ?? Colors.black;
 
   String parsedKeyName(BuildContext context) {
-    final quotation = styleScheme(context).quotation;
-    if (quotation == null || quotation.isEmpty) return keyName;
+    final quotation = styleScheme(context).quotation ?? const JsonQuotation();
+    if (quotation.isEmpty) return keyName;
     return '${quotation.leftQuote}$keyName${quotation.rightQuote}';
   }
 
@@ -71,7 +73,7 @@ class KeyValueTile extends StatelessWidget {
   }
 
   InlineSpan buildValue(BuildContext context) {
-    return _ValueSpan(
+    return ValueSpan(
       value: value,
       style: valueStyle(context).copyWith(color: valueColor(context)),
     );
@@ -82,11 +84,11 @@ class KeyValueTile extends StatelessWidget {
     // cs stand for colorScheme
     final cs = colorScheme(context);
     final spans = <InlineSpan>[
-      _KeySpan(
+      KeySpan(
         keyValue: parsedKeyName(context),
         style: keyStyle(context).copyWith(color: cs.normalColor ?? Colors.grey),
       ),
-      _ColonSpan(
+      ColonSpan(
         style:
             keyStyle(context).copyWith(color: cs.markColor ?? Colors.white70),
       ),
@@ -96,6 +98,7 @@ class KeyValueTile extends StatelessWidget {
     Widget result = SelectableText.rich(
       TextSpan(children: spans),
       onTap: onTap,
+      maxLines: maxLines,
     );
     if (leading == null) {
       result = Padding(padding: const EdgeInsets.only(left: 16), child: result);
@@ -137,7 +140,7 @@ class NullTile extends KeyValueTile {
     }
     style = style.copyWith(color: valueColor(context));
     if (color == null) {
-      return _ValueSpan(value: value, style: style);
+      return ValueSpan(value: value, style: style);
     }
 
     return WidgetSpan(
@@ -185,22 +188,6 @@ class BoolTile extends KeyValueTile {
   @override
   Color valueColor(BuildContext context) =>
       colorScheme(context).boolColor ?? Colors.blue;
-}
-
-class StringTile extends KeyValueTile {
-  const StringTile({
-    Key? key,
-    required String keyName,
-    required String value,
-  }) : super(
-          key: key,
-          keyName: keyName,
-          value: '"$value"',
-        );
-
-  @override
-  Color valueColor(BuildContext context) =>
-      colorScheme(context).stringColor ?? Colors.orange;
 }
 
 class MapListTile extends KeyValueTile {

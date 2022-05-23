@@ -1,9 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:json_view/src/widgets/json_config.dart';
+import 'package:json_view/src/widgets/string_tile.dart';
 
 import 'list_tile.dart';
 import 'map_tile.dart';
-import 'simple_tiles.dart';
+import 'simple_tiles.dart' hide StringTile;
 
 class JsonView extends StatelessWidget {
   /// {@template json_view.json_view.json}
@@ -130,7 +131,13 @@ Widget getParsedItem({
   if (value == null) return NullTile(keyName: key);
   if (value is num) return NumTile(keyName: key, value: value);
   if (value is bool) return BoolTile(keyName: key, value: value);
-  if (value is String) return StringTile(keyName: key, value: value);
+  if (value is String) {
+    return StringTile(
+      keyName: key,
+      value: value,
+      expanded: openAtStart,
+    );
+  }
   if (value is List) {
     return ListTile(
       keyName: key,

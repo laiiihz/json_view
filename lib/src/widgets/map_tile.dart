@@ -55,7 +55,7 @@ class _MapTileState extends State<MapTile> {
         ),
         if (_expanded)
           Padding(
-            padding: const EdgeInsets.only(left: 8),
+            padding: jsonConfig.itemPadding ?? const EdgeInsets.only(left: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: widget.items.map((item) {

@@ -18,7 +18,7 @@ class JsonConfigData {
 
   /// item padding,
   /// default is EdgeInsets.only(left: 8)
-  final EdgeInsetsGeometry? itemPadding;
+  final EdgeInsets? itemPadding;
 
   /// default is 300 milliseconds
   ///
@@ -96,7 +96,7 @@ class JsonConfigData {
     JsonColorScheme? color,
     JsonStyleScheme? style,
     bool? animation,
-    EdgeInsetsGeometry? itemPadding,
+    EdgeInsets? itemPadding,
     Duration? animationDuration,
     Curve? animationCurve,
     int? gap,

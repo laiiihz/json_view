@@ -82,6 +82,15 @@ class _StringTileState extends State<StringTile> {
           if (expanded) {
             result = selectedResult;
           }
+          if (config.animation ?? JsonConfigData.kUseAnimation) {
+            result = AnimatedSize(
+              alignment: Alignment.topCenter,
+              duration: JsonConfig.of(context).animationDuration ??
+                  const Duration(milliseconds: 300),
+              curve: JsonConfig.of(context).animationCurve ?? Curves.ease,
+              child: result,
+            );
+          }
 
           return result;
         } else {

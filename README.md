@@ -14,8 +14,9 @@ Support display large list json data like chrome dev tool.
 ## Highlight
 
 * 👑 json type highlight.
-* 📦 lazy load large list & map. 
+* 🔆 lazy load large list & map. 
 * 🚀 not bad performance.
+* 📦 only depend on flutter.
 
 ## Usage
 

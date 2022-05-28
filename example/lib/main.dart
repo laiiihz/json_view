@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage>
             // use with caution, it will cause performance issue when json items is too large
             openAtStart: false,
           ),
-          color: JsonColorScheme(),
+          color: const JsonColorScheme(),
         ),
         child: TabBarView(
           children: [

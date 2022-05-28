@@ -38,9 +38,9 @@ class JsonQuotation {
   static JsonQuotation singleQuote = const JsonQuotation.same('\'');
 
   bool get isEmpty =>
-      leftQuote != null &&
-      rightQuote != null &&
-      leftQuote!.isEmpty &&
+      leftQuote == null ||
+      rightQuote == null ||
+      leftQuote!.isEmpty ||
       rightQuote!.isEmpty;
   @override
   bool operator ==(Object other) {

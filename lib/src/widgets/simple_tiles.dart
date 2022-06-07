@@ -212,4 +212,10 @@ class MapListTile extends KeyValueTile {
                 )
               : null,
         );
+
+  @override
+  Color valueColor(BuildContext context) {
+    final cs = colorScheme(context);
+    return cs.normalColor ?? Colors.black;
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:json_view/src/widgets/json_view.dart';
 
 import '../models/json_config_data.dart';
 
@@ -17,9 +18,33 @@ class JsonConfig extends InheritedWidget {
 
   /// get a [JsonConfig] from [BuildContext]
   static JsonConfigData of(BuildContext context) {
+    final view = context.findAncestorWidgetOfExactType<JsonView>();
+    final body = context.findAncestorWidgetOfExactType<JsonViewBody>();
+    assert(
+      view == null || body == null,
+      'must provider a JsonView or JsonViewBody',
+    );
+    JsonConfigData? viewData;
+    if (view != null) {
+      viewData = JsonConfigData.fromJsonView(view);
+    } else if (body != null) {
+      viewData = JsonConfigData.fromJsonViewBody(body);
+    }
+
     final current = context.dependOnInheritedWidgetOfExactType<JsonConfig>();
-    final fallback = JsonConfigData.fallback(context);
-    if (current?.data == null) return fallback;
-    return fallback.merge(current!.data);
+
+    if (viewData == null) {
+      viewData = current?.data;
+    } else {
+      viewData = viewData.merge(current?.data);
+    }
+
+    if (viewData == null) {
+      viewData = JsonConfigData.fallback(context);
+    } else {
+      viewData = JsonConfigData.fallback(context).merge(viewData);
+    }
+
+    return viewData;
   }
 }

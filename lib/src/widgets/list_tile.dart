@@ -21,14 +21,12 @@ class ListTile extends StatefulWidget {
   final List items;
   final IndexRange range;
   final bool expanded;
-  final Widget? arrow;
   const ListTile({
     Key? key,
     required this.keyName,
     required this.items,
     required this.range,
     this.expanded = false,
-    this.arrow,
   }) : super(key: key);
 
   @override
@@ -64,8 +62,6 @@ class _ListTileState extends State<ListTile> {
         result.add(getIndexedItem(
           index: i,
           value: widget.items[i],
-          arrow: widget.arrow,
-          openAtStart: widget.expanded,
         ));
       }
       return result;
@@ -97,7 +93,8 @@ class _ListTileState extends State<ListTile> {
             items: widget.items,
             range:
                 IndexRange(start: startIndex, end: startIndex + currentGap - 1),
-            arrow: widget.arrow,
+            //TODO arrow
+            // arrow: widget.arrow,
             expanded: widget.expanded,
           ),
         );
@@ -107,7 +104,8 @@ class _ListTileState extends State<ListTile> {
             keyName: '[$i]',
             items: widget.items,
             range: IndexRange(start: startIndex, end: endIndex),
-            arrow: widget.arrow,
+            //TODO arrow
+            // arrow: widget.arrow,
             expanded: widget.expanded,
           ),
         );
@@ -128,7 +126,8 @@ class _ListTileState extends State<ListTile> {
           onTap: _changeState,
           expanded: _expanded,
           showLeading: widget.items.isNotEmpty,
-          arrow: widget.arrow,
+          arrow: jsonConfig.style?.arrow,
+          // arrow: widget.arrow,
         ),
         if (_expanded)
           Padding(

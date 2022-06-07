@@ -6,12 +6,7 @@ import '../../json_view.dart';
 class StringTile extends StatefulWidget {
   final String keyName;
   final String value;
-  final bool expanded;
-  const StringTile(
-      {Key? key,
-      required this.keyName,
-      required this.value,
-      required this.expanded})
+  const StringTile({Key? key, required this.keyName, required this.value})
       : super(key: key);
 
   @override
@@ -19,7 +14,7 @@ class StringTile extends StatefulWidget {
 }
 
 class _StringTileState extends State<StringTile> {
-  late bool expanded = widget.expanded;
+  bool expanded = false;
 
   String getParsedKeyName(BuildContext context) {
     final quotation =

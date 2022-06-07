@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:json_view/src/widgets/json_view.dart';
 
 import 'json_color_scheme.dart';
 import 'json_style_scheme.dart';
@@ -43,6 +44,24 @@ class JsonConfigData {
     this.animationCurve,
     this.gap,
   });
+
+  JsonConfigData.fromJsonView(JsonView view)
+      : color = view.colorScheme,
+        style = view.styleScheme,
+        animation = view.animation,
+        itemPadding = view.itemPadding,
+        animationDuration = view.animationDuration,
+        animationCurve = view.animationCurve,
+        gap = null;
+
+  JsonConfigData.fromJsonViewBody(JsonViewBody body)
+      : color = body.colorScheme,
+        style = body.styleScheme,
+        animation = body.animation,
+        itemPadding = body.itemPadding,
+        animationDuration = body.animationDuration,
+        animationCurve = body.animationCurve,
+        gap = body.gap;
 
   /// default use animation
   static const kUseAnimation = true;
@@ -132,6 +151,7 @@ class JsonConfigData {
 
     return other is JsonConfigData &&
         other.color == color &&
+        other.style == style &&
         other.itemPadding == itemPadding &&
         other.animation == animation &&
         other.animationDuration == animationDuration &&
@@ -142,6 +162,7 @@ class JsonConfigData {
   @override
   int get hashCode => hashValues(
         color,
+        style,
         itemPadding,
         animationDuration,
         animationCurve,

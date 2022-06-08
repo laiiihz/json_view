@@ -1,3 +1,8 @@
+## 0.4.0
+
+* [BREAKCHANGE] most properties now can add from JsonView or JsonViewBody.
+* fix color & style configurations merge issue.
+
 ## 0.3.3
 
 * fix null quotation error.

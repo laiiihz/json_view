@@ -32,17 +32,12 @@ class JsonConfig extends InheritedWidget {
     }
 
     final current = context.dependOnInheritedWidgetOfExactType<JsonConfig>();
+    final fallback = JsonConfigData.fallback(context);
 
     if (viewData == null) {
-      viewData = current?.data;
+      viewData = fallback.merge(current?.data);
     } else {
-      viewData = viewData.merge(current?.data);
-    }
-
-    if (viewData == null) {
-      viewData = JsonConfigData.fallback(context);
-    } else {
-      viewData = JsonConfigData.fallback(context).merge(viewData);
+      viewData = fallback.merge(current?.data).merge(viewData);
     }
 
     return viewData;

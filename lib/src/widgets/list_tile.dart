@@ -126,7 +126,6 @@ class _ListTileState extends State<ListTile> {
           onTap: _changeState,
           expanded: _expanded,
           showLeading: widget.items.isNotEmpty,
-          arrow: jsonConfig.style?.arrow,
           // arrow: widget.arrow,
         ),
         if (_expanded)

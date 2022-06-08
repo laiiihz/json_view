@@ -198,18 +198,13 @@ class MapListTile extends KeyValueTile {
     required VoidCallback onTap,
     required bool showLeading,
     required bool expanded,
-    required Widget? arrow,
   }) : super(
           key: key,
           keyName: keyName,
           value: value,
           onTap: onTap,
           leading: showLeading
-              ? ArrowWidget(
-                  expanded: expanded,
-                  onTap: onTap,
-                  customArrow: arrow,
-                )
+              ? ArrowWidget(expanded: expanded, onTap: onTap)
               : null,
         );
 

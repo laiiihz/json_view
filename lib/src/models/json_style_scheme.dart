@@ -126,5 +126,11 @@ class JsonStyleScheme {
   }
 
   @override
-  int get hashCode => hashValues(keysStyle, valuesStyle, quotation, arrow);
+  int get hashCode {
+    return keysStyle.hashCode ^
+        valuesStyle.hashCode ^
+        quotation.hashCode ^
+        arrow.hashCode ^
+        openAtStart.hashCode;
+  }
 }

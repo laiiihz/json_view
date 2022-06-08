@@ -120,9 +120,11 @@ class JsonConfigData {
     Curve? animationCurve,
     int? gap,
   }) {
+    final colorScheme = this.color == null ? color : this.color!.merge(color);
+    final styleScheme = this.style == null ? style : this.style!.merge(style);
     return JsonConfigData(
-      color: this.color?.merge(color),
-      style: this.style?.merge(style),
+      color: colorScheme,
+      style: styleScheme,
       animation: animation ?? this.animation,
       itemPadding: itemPadding ?? this.itemPadding,
       animationDuration: animationDuration ?? this.animationDuration,

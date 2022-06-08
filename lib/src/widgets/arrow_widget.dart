@@ -8,26 +8,18 @@ import '../painters/arrow_painter.dart';
 class ArrowWidget extends StatelessWidget {
   final VoidCallback? onTap;
   final bool expanded;
-  final Widget? customArrow;
 
   const ArrowWidget({
     Key? key,
     this.onTap,
     this.expanded = false,
-    this.customArrow,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final JsonConfigData config = JsonConfig.of(context);
     final cs = config.color ?? JsonConfigData.defaultColor(context);
-    Widget? arrow;
-    if (config.style == null) {
-      arrow = customArrow;
-    } else {
-      arrow = config.style!.copyWith(arrow: customArrow).arrow;
-    }
-
+    Widget? arrow = config.style?.arrow;
     if (arrow != null) {
       arrow = IconTheme(
         data: IconThemeData(color: cs.normalColor, size: 16),

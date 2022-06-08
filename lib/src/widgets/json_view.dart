@@ -3,7 +3,6 @@ import 'package:json_view/src/widgets/json_config.dart';
 import 'package:json_view/src/widgets/string_tile.dart';
 
 import '../models/json_color_scheme.dart';
-import '../models/json_config_data.dart';
 import '../models/json_style_scheme.dart';
 import 'list_tile.dart';
 import 'map_tile.dart';
@@ -148,15 +147,13 @@ class JsonViewBody extends StatelessWidget {
 Widget getParsedItem({
   required String key,
   required dynamic value,
+  int depth = 0,
 }) {
   if (value == null) return NullTile(keyName: key);
   if (value is num) return NumTile(keyName: key, value: value);
   if (value is bool) return BoolTile(keyName: key, value: value);
   if (value is String) {
-    return StringTile(
-      keyName: key,
-      value: value,
-    );
+    return StringTile(keyName: key, value: value);
   }
   if (value is List) {
     return ListTile(
@@ -175,6 +172,7 @@ Widget getParsedItem({
 }
 
 /// get a tile Widget from value & index
-Widget getIndexedItem({required int index, required dynamic value}) {
-  return getParsedItem(key: '[$index]', value: value);
+Widget getIndexedItem(
+    {required int index, required dynamic value, int depth = 0}) {
+  return getParsedItem(key: '[$index]', value: value, depth: depth);
 }

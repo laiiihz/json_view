@@ -9,13 +9,11 @@ class MapTile extends StatefulWidget {
   final String keyName;
   final List<MapEntry> items;
   final bool expanded;
-  final Widget? arrow;
   const MapTile({
     Key? key,
     required this.keyName,
     required this.items,
     this.expanded = false,
-    this.arrow,
   }) : super(key: key);
 
   @override
@@ -50,7 +48,6 @@ class _MapTileState extends State<MapTile> {
           value: _value,
           onTap: _changeState,
           expanded: _expanded,
-          arrow: widget.arrow,
           showLeading: widget.items.isNotEmpty,
         ),
         if (_expanded)

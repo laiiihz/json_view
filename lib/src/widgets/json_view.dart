@@ -74,14 +74,14 @@ class JsonView extends StatelessWidget {
       builder = (context, index) {
         final item = items[index];
         final key = item.key;
-        return getParsedItem(key: key, value: item.value);
+        return getParsedItem(key: key, value: item.value, depth: 0);
       };
       count = items.length;
     } else if (json is List) {
       final items = json as List;
       builder = (context, index) {
         final item = items[index];
-        return getIndexedItem(index: index, value: item);
+        return getIndexedItem(index: index, value: item, depth: 0);
       };
       count = items.length;
     }
@@ -160,12 +160,14 @@ Widget getParsedItem({
       keyName: key,
       items: value,
       range: IndexRange(start: 0, end: value.length - 1),
+      depth: depth,
     );
   }
   if (value is Map) {
     return MapTile(
       keyName: key,
       items: value.entries.toList(),
+      depth: depth,
     );
   }
   return const Text('unsupport type');

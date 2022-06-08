@@ -21,12 +21,14 @@ class ListTile extends StatefulWidget {
   final List items;
   final IndexRange range;
   final bool expanded;
+  final int depth;
   const ListTile({
     Key? key,
     required this.keyName,
     required this.items,
     required this.range,
     this.expanded = false,
+    required this.depth,
   }) : super(key: key);
 
   @override
@@ -62,6 +64,7 @@ class _ListTileState extends State<ListTile> {
         result.add(getIndexedItem(
           index: i,
           value: widget.items[i],
+          depth: widget.depth + 1,
         ));
       }
       return result;
@@ -93,9 +96,8 @@ class _ListTileState extends State<ListTile> {
             items: widget.items,
             range:
                 IndexRange(start: startIndex, end: startIndex + currentGap - 1),
-            //TODO arrow
-            // arrow: widget.arrow,
             expanded: widget.expanded,
+            depth: widget.depth,
           ),
         );
       } else {
@@ -104,9 +106,8 @@ class _ListTileState extends State<ListTile> {
             keyName: '[$i]',
             items: widget.items,
             range: IndexRange(start: startIndex, end: endIndex),
-            //TODO arrow
-            // arrow: widget.arrow,
             expanded: widget.expanded,
+            depth: widget.depth,
           ),
         );
       }

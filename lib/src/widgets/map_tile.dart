@@ -9,11 +9,13 @@ class MapTile extends StatefulWidget {
   final String keyName;
   final List<MapEntry> items;
   final bool expanded;
+  final int depth;
   const MapTile({
     Key? key,
     required this.keyName,
     required this.items,
     this.expanded = false,
+    required this.depth,
   }) : super(key: key);
 
   @override
@@ -56,7 +58,11 @@ class _MapTileState extends State<MapTile> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: widget.items.map((item) {
-                return getParsedItem(key: item.key, value: item.value);
+                return getParsedItem(
+                  key: item.key,
+                  value: item.value,
+                  depth: widget.depth + 1,
+                );
               }).toList(),
             ),
           ),

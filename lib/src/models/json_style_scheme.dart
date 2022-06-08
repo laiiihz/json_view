@@ -75,6 +75,13 @@ class JsonStyleScheme {
   /// use with `caution`
   final bool? openAtStart;
 
+  /// the default open depth of json.
+  ///
+  /// default set to 0, means no open depth
+  ///
+  /// if set to 1, means open depth of 1
+  final int depth;
+
   /// Json color scheme
   const JsonStyleScheme({
     this.keysStyle = const TextStyle(),
@@ -82,7 +89,8 @@ class JsonStyleScheme {
     this.quotation = const JsonQuotation(),
     this.arrow,
     this.openAtStart = false,
-  });
+    this.depth = 0,
+  }) : assert(depth >= 0);
 
   /// copy another JsonStyleScheme
   JsonStyleScheme copyWith({
@@ -91,6 +99,7 @@ class JsonStyleScheme {
     JsonQuotation? quotation,
     Widget? arrow,
     bool? openAtStart,
+    int? depth,
   }) {
     return JsonStyleScheme(
       keysStyle: keysStyle ?? this.keysStyle,
@@ -98,6 +107,7 @@ class JsonStyleScheme {
       quotation: quotation ?? this.quotation,
       arrow: arrow ?? this.arrow,
       openAtStart: openAtStart ?? this.openAtStart,
+      depth: depth ?? this.depth,
     );
   }
 
@@ -110,6 +120,7 @@ class JsonStyleScheme {
       quotation: scheme.quotation,
       arrow: scheme.arrow,
       openAtStart: scheme.openAtStart,
+      depth: scheme.depth,
     );
   }
 
@@ -122,7 +133,8 @@ class JsonStyleScheme {
         other.valuesStyle == valuesStyle &&
         other.quotation == quotation &&
         other.arrow == arrow &&
-        other.openAtStart == openAtStart;
+        other.openAtStart == openAtStart &&
+        other.depth == depth;
   }
 
   @override
@@ -131,6 +143,7 @@ class JsonStyleScheme {
         valuesStyle.hashCode ^
         quotation.hashCode ^
         arrow.hashCode ^
-        openAtStart.hashCode;
+        openAtStart.hashCode ^
+        depth.hashCode;
   }
 }

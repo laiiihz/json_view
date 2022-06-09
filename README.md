@@ -52,6 +52,10 @@ JsonConfig(
 
 [pub.dev/documentation](https://pub.dev/documentation/json_view/latest/)
 
+## ROADMAP
+
+* [ ] add `TESTS`
+* [ ] override `ListTile` & `MapTile` `didChangeDependencies`
 
 ## Some thing went wrong 🤔
 

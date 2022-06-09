@@ -36,7 +36,8 @@ class ListTile extends StatefulWidget {
 }
 
 class _ListTileState extends State<ListTile> {
-  late bool _expanded = widget.expanded;
+  bool _init = false;
+  bool _expanded = false;
 
   String get _value {
     if (widget.items.isEmpty) return '[]';
@@ -97,7 +98,7 @@ class _ListTileState extends State<ListTile> {
             range:
                 IndexRange(start: startIndex, end: startIndex + currentGap - 1),
             expanded: widget.expanded,
-            depth: widget.depth,
+            depth: widget.depth + 1,
           ),
         );
       } else {
@@ -107,7 +108,7 @@ class _ListTileState extends State<ListTile> {
             items: widget.items,
             range: IndexRange(start: startIndex, end: endIndex),
             expanded: widget.expanded,
-            depth: widget.depth,
+            depth: widget.depth + 1,
           ),
         );
       }
@@ -115,9 +116,23 @@ class _ListTileState extends State<ListTile> {
     return result;
   }
 
+  // safe call context in build
+  _initExpanded(BuildContext context) {
+    if (!_init) {
+      _init = true;
+      final jsonConfig = JsonConfig.of(context);
+      _expanded = jsonConfig.style?.openAtStart ?? false;
+      int depth = jsonConfig.style?.depth ?? 0;
+      if (depth > 0) {
+        _expanded = depth > widget.depth;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final jsonConfig = JsonConfig.of(context);
+    _initExpanded(context);
     Widget result = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

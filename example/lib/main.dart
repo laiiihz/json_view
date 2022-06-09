@@ -57,21 +57,19 @@ class _HomePageState extends State<HomePage>
       body: JsonConfig(
         data: JsonConfigData(
           gap: 100,
-          style: JsonStyleScheme(
-            quotation: const JsonQuotation.same('"'),
+          style: const JsonStyleScheme(
+            quotation: JsonQuotation.same('"'),
             // set this to true to open all nodes at start
             // use with caution, it will cause performance issue when json items is too large
             openAtStart: false,
-            arrow: Container(width: 12, height: 12, color: Colors.red),
+            // too large depth will cause performance issue
+            depth: 2,
           ),
           color: const JsonColorScheme(),
         ),
         child: TabBarView(
           children: [
             JsonView(
-              styleScheme: JsonStyleScheme(
-                arrow: const Icon(Icons.linked_camera),
-              ),
               json: getJsonData(),
             ),
             JsonView(

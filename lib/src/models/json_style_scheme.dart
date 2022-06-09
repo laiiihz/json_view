@@ -80,6 +80,8 @@ class JsonStyleScheme {
   /// default set to 0, means no open depth
   ///
   /// if set to 1, means open depth of 1
+  /// 
+  /// too large depth will cause performance issue, use with `caution`
   final int depth;
 
   /// Json color scheme

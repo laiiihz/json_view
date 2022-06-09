@@ -41,6 +41,7 @@ class JsonView extends StatelessWidget {
   final Duration? animationDuration;
   final Curve? animationCurve;
   final int? gap;
+  final int? depth;
 
   /// provider a json view, build with listview
   ///
@@ -60,6 +61,7 @@ class JsonView extends StatelessWidget {
     this.animationDuration,
     this.animationCurve,
     this.gap,
+    this.depth,
   }) : super(key: key);
 
   @override
@@ -98,17 +100,18 @@ class JsonView extends StatelessWidget {
 
 class JsonViewBody extends StatelessWidget {
   /// use with caution, it will cause performance issue when json root items is too large
-  const JsonViewBody(
-      {Key? key,
-      required this.json,
-      this.colorScheme,
-      this.styleScheme,
-      this.animation,
-      this.itemPadding,
-      this.animationDuration,
-      this.animationCurve,
-      this.gap})
-      : super(key: key);
+  const JsonViewBody({
+    Key? key,
+    required this.json,
+    this.colorScheme,
+    this.styleScheme,
+    this.animation,
+    this.itemPadding,
+    this.animationDuration,
+    this.animationCurve,
+    this.gap,
+    this.depth,
+  }) : super(key: key);
 
   /// {@macro json_view.json_view.json}
   final dynamic json;
@@ -122,6 +125,7 @@ class JsonViewBody extends StatelessWidget {
   final Duration? animationDuration;
   final Curve? animationCurve;
   final int? gap;
+  final int? depth;
 
   @override
   Widget build(BuildContext context) {

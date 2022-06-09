@@ -23,7 +23,8 @@ class MapTile extends StatefulWidget {
 }
 
 class _MapTileState extends State<MapTile> {
-  late bool _expanded = widget.expanded;
+  bool _init = false;
+  bool _expanded = false;
 
   _changeState() {
     if (mounted && widget.items.isNotEmpty) {
@@ -39,9 +40,23 @@ class _MapTileState extends State<MapTile> {
     return '{ ... }';
   }
 
+  // safe call context in build
+  _initExpanded(BuildContext context) {
+    if (!_init) {
+      _init = true;
+      final jsonConfig = JsonConfig.of(context);
+      _expanded = jsonConfig.style?.openAtStart ?? false;
+      int depth = jsonConfig.style?.depth ?? 0;
+      if (depth > 0) {
+        _expanded = depth > widget.depth;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final jsonConfig = JsonConfig.of(context);
+    _initExpanded(context);
     Widget result = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

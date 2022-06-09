@@ -2,6 +2,7 @@
 
 * [BREAKCHANGE] most properties now can add from JsonView or JsonViewBody.
 * fix color & style configurations merge issue.
+* add default open depth.
 
 ## 0.3.3
 

@@ -57,6 +57,26 @@ class JsonQuotation {
 
 /// json style scheem
 class JsonStyleScheme {
+  /// {@template json_view.json_style_scheme.JsonStyleScheme}
+  /// Json style scheme
+  ///
+  /// props:
+  /// * keysStyle
+  /// * valuesStyle
+  /// * quotation
+  /// * arrow
+  /// * openAtStart
+  /// * depth
+  /// {@endtemplate}
+  const JsonStyleScheme({
+    this.keysStyle = const TextStyle(),
+    this.valuesStyle = const TextStyle(),
+    this.quotation = const JsonQuotation(),
+    this.arrow,
+    this.openAtStart = false,
+    this.depth = 0,
+  }) : assert(depth >= 0);
+
   /// text style for keys
   final TextStyle? keysStyle;
 
@@ -67,6 +87,8 @@ class JsonStyleScheme {
   final JsonQuotation? quotation;
 
   /// the arrow widget
+  ///
+  /// you can add a left to right arrow widget.
   final Widget? arrow;
 
   /// default set to false, this may cause performance issue when rendering
@@ -80,19 +102,9 @@ class JsonStyleScheme {
   /// default set to 0, means no open depth
   ///
   /// if set to 1, means open depth of 1
-  /// 
+  ///
   /// too large depth will cause performance issue, use with `caution`
   final int depth;
-
-  /// Json color scheme
-  const JsonStyleScheme({
-    this.keysStyle = const TextStyle(),
-    this.valuesStyle = const TextStyle(),
-    this.quotation = const JsonQuotation(),
-    this.arrow,
-    this.openAtStart = false,
-    this.depth = 0,
-  }) : assert(depth >= 0);
 
   /// copy another JsonStyleScheme
   JsonStyleScheme copyWith({

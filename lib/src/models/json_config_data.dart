@@ -14,24 +14,35 @@ class JsonConfigData {
   /// the style of json view
   final JsonStyleScheme? style;
 
+  /// {@template json_view.json_config_data.JsonConfigData.animation}
   /// has animation
+  /// {@endtemplate}
   final bool? animation;
 
+  /// {@template json_view.json_config_data.JsonConfigData.itemPadding}
   /// item padding,
   /// default is EdgeInsets.only(left: 8)
+  /// {@endtemplate}
   final EdgeInsets? itemPadding;
 
+  /// {@template json_view.json_config_data.JsonConfigData.animationDuration}
   /// default is 300 milliseconds
   ///
   /// only work with [animation] is true
+  /// {@endtemplate}
+
   final Duration? animationDuration;
 
+  /// {@template json_view.json_config_data.JsonConfigData.animationDanimationCurveuration}
   /// default is [Curves.ease]
   ///
   /// only work with [animation] is true
+  /// {@endtemplate}
   final Curve? animationCurve;
 
+  /// {@template json_view.json_config_data.JsonConfigData.gap}
   /// json list gap, default is 100
+  /// {@endtemplate}
   final int? gap;
 
   /// Json View Configuration Data

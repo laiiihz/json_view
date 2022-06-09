@@ -62,6 +62,7 @@ class _HomePageState extends State<HomePage>
             // set this to true to open all nodes at start
             // use with caution, it will cause performance issue when json items is too large
             openAtStart: false,
+            arrow: Icon(Icons.arrow_forward),
             // too large depth will cause performance issue
             depth: 2,
           ),

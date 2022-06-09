@@ -39,7 +39,9 @@ JsonConfig(
         color: JsonColorScheme(
             stringColor: Colors.grey,
         ),
-        style: JsonStyleScheme()
+        style: JsonStyleScheme(
+            arrow: const Icon(Icons.arrow_right),
+        )
     ),
     /// any widget will contain jsonView
     child: ...,

@@ -23,7 +23,19 @@ class JsonColorScheme {
   /// background color of null value.
   final Color? nullBackground;
 
+  /// {@template json_view.json_color_scheme.JsonColorScheme}
   /// Json color scheme
+  ///
+  /// props:
+  /// * nullColor
+  /// * boolColor
+  /// * numColor
+  /// * stringColor
+  /// * normalColor
+  /// * markColor
+  /// * nullBackground
+  /// 
+  /// {@endtemplate}
   const JsonColorScheme({
     this.nullColor,
     this.boolColor,

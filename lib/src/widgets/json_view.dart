@@ -32,16 +32,26 @@ class JsonView extends StatelessWidget {
   @Deprecated('use JsonStyleScheme.arrowWidget instead')
   final Widget? arrow;
 
+  /// {@macro json_view.json_color_scheme.JsonColorScheme}
   final JsonColorScheme? colorScheme;
 
+  /// {@macro json_view.json_style_scheme.JsonStyleScheme}
   final JsonStyleScheme? styleScheme;
 
+  /// {@macro json_view.json_config_data.JsonConfigData.animation}
   final bool? animation;
+
+  /// {@macro json_view.json_config_data.JsonConfigData.itemPadding}
   final EdgeInsets? itemPadding;
+
+  /// {@macro json_view.json_config_data.JsonConfigData.animationDuration}
   final Duration? animationDuration;
+
+  /// {@macro json_view.json_config_data.JsonConfigData.animationCurve}
   final Curve? animationCurve;
+
+  /// {@macro json_view.json_config_data.JsonConfigData.gap}
   final int? gap;
-  final int? depth;
 
   /// provider a json view, build with listview
   ///
@@ -61,7 +71,6 @@ class JsonView extends StatelessWidget {
     this.animationDuration,
     this.animationCurve,
     this.gap,
-    this.depth,
   }) : super(key: key);
 
   @override
@@ -110,22 +119,31 @@ class JsonViewBody extends StatelessWidget {
     this.animationDuration,
     this.animationCurve,
     this.gap,
-    this.depth,
   }) : super(key: key);
 
   /// {@macro json_view.json_view.json}
   final dynamic json;
 
+  /// {@macro json_view.json_color_scheme.JsonColorScheme}
   final JsonColorScheme? colorScheme;
 
+  /// {@macro json_view.json_style_scheme.JsonStyleScheme}
   final JsonStyleScheme? styleScheme;
 
+  /// {@macro json_view.json_config_data.JsonConfigData.animation}
   final bool? animation;
+
+  /// {@macro json_view.json_config_data.JsonConfigData.itemPadding}
   final EdgeInsets? itemPadding;
+
+  /// {@macro json_view.json_config_data.JsonConfigData.animationDuration}
   final Duration? animationDuration;
+
+  /// {@macro json_view.json_config_data.JsonConfigData.animationCurve}
   final Curve? animationCurve;
+
+  /// {@macro json_view.json_config_data.JsonConfigData.gap}
   final int? gap;
-  final int? depth;
 
   @override
   Widget build(BuildContext context) {

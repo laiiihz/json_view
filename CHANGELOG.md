@@ -1,3 +1,7 @@
+## 0.4.1
+
+* [FIX] fix #12, large list index error.
+
 ## 0.4.0
 
 * [BREAKCHANGE] most properties now can add from JsonView or JsonViewBody.

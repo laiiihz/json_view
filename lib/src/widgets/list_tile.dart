@@ -64,7 +64,7 @@ class _ListTileState extends State<ListTile> {
       for (var i = 0; i <= widget.range.length; i++) {
         result.add(getIndexedItem(
           index: i,
-          value: widget.items[i],
+          value: widget.items[i + widget.range.start],
           depth: widget.depth + 1,
         ));
       }

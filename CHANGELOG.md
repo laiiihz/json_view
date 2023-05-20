@@ -1,6 +1,7 @@
 ## 0.4.1
 
 * [FIX] fix #12, large list index error.
+* [CHORE] update minSDK version to 2.14.0
 
 ## 0.4.0
 

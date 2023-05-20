@@ -52,7 +52,7 @@ class JsonQuotation {
   }
 
   @override
-  int get hashCode => hashValues(leftQuote, rightQuote);
+  int get hashCode => Object.hash(leftQuote, rightQuote);
 }
 
 /// json style scheem

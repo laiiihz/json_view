@@ -173,7 +173,7 @@ class JsonConfigData {
   }
 
   @override
-  int get hashCode => hashValues(
+  int get hashCode => Object.hash(
         color,
         style,
         itemPadding,

@@ -4,15 +4,16 @@ import 'package:json_view/src/widgets/json_view.dart';
 import '../models/json_config_data.dart';
 
 class JsonConfig extends InheritedWidget {
+  /// configuration of json view
+  const JsonConfig({
+    super.key,
+    Widget? child,
+    this.data,
+  }) : super(child: child ?? const SizedBox.shrink());
+
   /// json configuration data
   final JsonConfigData? data;
 
-  /// configuration of json view
-  const JsonConfig({
-    Key? key,
-    Widget? child,
-    this.data,
-  }) : super(key: key, child: child ?? const SizedBox.shrink());
   @override
   bool updateShouldNotify(JsonConfig oldWidget) => data != oldWidget.data;
 

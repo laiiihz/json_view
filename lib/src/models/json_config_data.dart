@@ -6,6 +6,35 @@ import 'json_style_scheme.dart';
 
 /// Json View Configuration Data
 class JsonConfigData {
+  /// Json View Configuration Data
+  JsonConfigData({
+    this.color,
+    this.style,
+    this.itemPadding,
+    this.animation,
+    this.animationDuration,
+    this.animationCurve,
+    this.gap,
+  });
+
+  JsonConfigData.fromJsonView(JsonView view)
+      : color = view.colorScheme,
+        style = view.styleScheme,
+        animation = view.animation,
+        itemPadding = view.itemPadding,
+        animationDuration = view.animationDuration,
+        animationCurve = view.animationCurve,
+        gap = null;
+
+  JsonConfigData.fromJsonViewBody(JsonViewBody body)
+      : color = body.colorScheme,
+        style = body.styleScheme,
+        animation = body.animation,
+        itemPadding = body.itemPadding,
+        animationDuration = body.animationDuration,
+        animationCurve = body.animationCurve,
+        gap = body.gap;
+
   /// color scheme of json view
   ///
   /// default is defaultDarkColorScheme & defaultLightColorScheme base on current theme
@@ -44,35 +73,6 @@ class JsonConfigData {
   /// json list gap, default is 100
   /// {@endtemplate}
   final int? gap;
-
-  /// Json View Configuration Data
-  JsonConfigData({
-    this.color,
-    this.style,
-    this.itemPadding,
-    this.animation,
-    this.animationDuration,
-    this.animationCurve,
-    this.gap,
-  });
-
-  JsonConfigData.fromJsonView(JsonView view)
-      : color = view.colorScheme,
-        style = view.styleScheme,
-        animation = view.animation,
-        itemPadding = view.itemPadding,
-        animationDuration = view.animationDuration,
-        animationCurve = view.animationCurve,
-        gap = null;
-
-  JsonConfigData.fromJsonViewBody(JsonViewBody body)
-      : color = body.colorScheme,
-        style = body.styleScheme,
-        animation = body.animation,
-        itemPadding = body.itemPadding,
-        animationDuration = body.animationDuration,
-        animationCurve = body.animationCurve,
-        gap = body.gap;
 
   /// default use animation
   static const kUseAnimation = true;

@@ -2,6 +2,29 @@ import 'package:flutter/material.dart';
 
 /// Json Color Scheme
 class JsonColorScheme {
+  /// {@template json_view.json_color_scheme.JsonColorScheme}
+  /// Json color scheme
+  ///
+  /// props:
+  /// * [nullColor]
+  /// * [boolColor]
+  /// * [numColor]
+  /// * [stringColor]
+  /// * [normalColor]
+  /// * [markColor]
+  /// * [nullBackground]
+  ///
+  /// {@endtemplate}
+  const JsonColorScheme({
+    this.nullColor,
+    this.boolColor,
+    this.numColor,
+    this.stringColor,
+    this.normalColor,
+    this.markColor,
+    this.nullBackground,
+  });
+
   /// color for null value
   final Color? nullColor;
 
@@ -22,29 +45,6 @@ class JsonColorScheme {
 
   /// background color of null value.
   final Color? nullBackground;
-
-  /// {@template json_view.json_color_scheme.JsonColorScheme}
-  /// Json color scheme
-  ///
-  /// props:
-  /// * nullColor
-  /// * boolColor
-  /// * numColor
-  /// * stringColor
-  /// * normalColor
-  /// * markColor
-  /// * nullBackground
-  ///
-  /// {@endtemplate}
-  const JsonColorScheme({
-    this.nullColor,
-    this.boolColor,
-    this.numColor,
-    this.stringColor,
-    this.normalColor,
-    this.markColor,
-    this.nullBackground,
-  });
 
   /// copy colors from another scheme
   JsonColorScheme copyWith({

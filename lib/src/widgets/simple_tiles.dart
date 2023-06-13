@@ -10,24 +10,24 @@ typedef SpanBuilder = InlineSpan Function(BuildContext context, dynamic value);
 
 class ColonSpan extends TextSpan {
   const ColonSpan({
-    TextStyle? style,
-  }) : super(text: ' : ', style: style);
+    super.style,
+  }) : super(text: ' : ');
 }
 
 class KeySpan extends TextSpan {
   final String keyValue;
   const KeySpan({
     required this.keyValue,
-    TextStyle? style,
-  }) : super(text: keyValue, style: style);
+    super.style,
+  }) : super(text: keyValue);
 }
 
 class ValueSpan extends TextSpan {
   final String value;
   const ValueSpan({
     required this.value,
-    TextStyle? style,
-  }) : super(text: value, style: style);
+    super.style,
+  }) : super(text: value);
 }
 
 class KeyValueTile extends StatelessWidget {
@@ -37,13 +37,13 @@ class KeyValueTile extends StatelessWidget {
   final VoidCallback? onTap;
   final int? maxLines;
   const KeyValueTile({
-    Key? key,
+    super.key,
     required this.keyName,
     required this.value,
     this.leading,
     this.onTap,
     this.maxLines,
-  }) : super(key: key);
+  });
 
   JsonColorScheme colorScheme(BuildContext context) =>
       JsonConfig.of(context).color ?? const JsonColorScheme();
@@ -118,13 +118,9 @@ class KeyValueTile extends StatelessWidget {
 
 class NullTile extends KeyValueTile {
   const NullTile({
-    Key? key,
-    required String keyName,
-  }) : super(
-          key: key,
-          keyName: keyName,
-          value: 'null',
-        );
+    super.key,
+    required super.keyName,
+  }) : super(value: 'null');
 
   @override
   Color valueColor(BuildContext context) =>
@@ -160,14 +156,10 @@ class NullTile extends KeyValueTile {
 
 class NumTile extends KeyValueTile {
   const NumTile({
-    Key? key,
-    required String keyName,
+    super.key,
+    required super.keyName,
     required num value,
-  }) : super(
-          key: key,
-          keyName: keyName,
-          value: '$value',
-        );
+  }) : super(value: '$value');
 
   @override
   Color valueColor(BuildContext context) =>
@@ -176,14 +168,10 @@ class NumTile extends KeyValueTile {
 
 class BoolTile extends KeyValueTile {
   const BoolTile({
-    Key? key,
-    required String keyName,
+    super.key,
+    required super.keyName,
     required bool value,
-  }) : super(
-          key: key,
-          keyName: keyName,
-          value: '$value',
-        );
+  }) : super(value: '$value');
 
   @override
   Color valueColor(BuildContext context) =>
@@ -192,15 +180,13 @@ class BoolTile extends KeyValueTile {
 
 class MapListTile extends KeyValueTile {
   MapListTile({
-    Key? key,
-    required String keyName,
+    super.key,
+    required super.keyName,
     required String value,
     required VoidCallback onTap,
     required bool showLeading,
     required bool expanded,
   }) : super(
-          key: key,
-          keyName: keyName,
           value: value,
           onTap: onTap,
           leading: showLeading

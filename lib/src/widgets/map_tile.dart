@@ -6,17 +6,17 @@ import 'json_view.dart';
 import 'simple_tiles.dart';
 
 class MapTile extends StatefulWidget {
-  final String keyName;
-  final List<MapEntry> items;
-  final bool expanded;
-  final int depth;
   const MapTile({
-    Key? key,
+    super.key,
     required this.keyName,
     required this.items,
     this.expanded = false,
     required this.depth,
-  }) : super(key: key);
+  });
+  final String keyName;
+  final List<MapEntry> items;
+  final bool expanded;
+  final int depth;
 
   @override
   State<MapTile> createState() => _MapTileState();

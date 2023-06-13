@@ -6,30 +6,30 @@ import 'json_view.dart';
 import 'simple_tiles.dart';
 
 class IndexRange {
-  final int start;
-  final int end;
   IndexRange({
     required this.start,
     required this.end,
   });
+  final int start;
+  final int end;
 
   int get length => end - start;
 }
 
 class ListTile extends StatefulWidget {
-  final String keyName;
-  final List items;
-  final IndexRange range;
-  final bool expanded;
-  final int depth;
   const ListTile({
-    Key? key,
+    super.key,
     required this.keyName,
     required this.items,
     required this.range,
     this.expanded = false,
     required this.depth,
-  }) : super(key: key);
+  });
+  final String keyName;
+  final List items;
+  final IndexRange range;
+  final bool expanded;
+  final int depth;
 
   @override
   State<ListTile> createState() => _ListTileState();

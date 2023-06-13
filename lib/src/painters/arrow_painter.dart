@@ -1,12 +1,13 @@
 import 'package:flutter/widgets.dart';
 
 class ArrowPainter extends CustomPainter {
-  final Color color;
-  final double arrowSize;
   ArrowPainter({
     required this.color,
     this.arrowSize = 8,
   });
+  final Color color;
+  final double arrowSize;
+
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()

@@ -4,11 +4,10 @@ import 'package:json_view/src/widgets/simple_tiles.dart';
 import '../../json_view.dart';
 
 class StringTile extends StatefulWidget {
+  const StringTile({super.key, required this.keyName, required this.value});
+
   final String keyName;
   final String value;
-  const StringTile({Key? key, required this.keyName, required this.value})
-      : super(key: key);
-
   @override
   State<StringTile> createState() => _StringTileState();
 }
@@ -97,16 +96,12 @@ class _StringTileState extends State<StringTile> {
 }
 
 class _StringInnterTile extends KeyValueTile {
-  const _StringInnterTile(
-      {required String keyName,
-      required String value,
-      int? maxLines,
-      VoidCallback? onTap})
-      : super(
-            keyName: keyName,
-            value: '"$value"',
-            maxLines: maxLines,
-            onTap: onTap);
+  const _StringInnterTile({
+    required super.keyName,
+    required String value,
+    super.maxLines,
+    VoidCallback? onTap,
+  }) : super(value: '"$value"', onTap: onTap);
 
   @override
   Color valueColor(BuildContext context) =>
@@ -115,8 +110,8 @@ class _StringInnterTile extends KeyValueTile {
 
 class _StringOnlyDisplayTile extends _StringInnterTile {
   const _StringOnlyDisplayTile(
-      {required String keyName, required String value, VoidCallback? onTap})
-      : super(keyName: keyName, value: value, maxLines: 1, onTap: onTap);
+      {required String keyName, required String value, super.onTap})
+      : super(keyName: keyName, value: value, maxLines: 1);
   @override
   Widget build(BuildContext context) {
     final cs = colorScheme(context);

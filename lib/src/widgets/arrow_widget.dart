@@ -6,14 +6,13 @@ import '../../json_view.dart';
 import '../painters/arrow_painter.dart';
 
 class ArrowWidget extends StatelessWidget {
-  final VoidCallback? onTap;
-  final bool expanded;
-
   const ArrowWidget({
-    Key? key,
+    super.key,
     this.onTap,
     this.expanded = false,
-  }) : super(key: key);
+  });
+  final VoidCallback? onTap;
+  final bool expanded;
 
   @override
   Widget build(BuildContext context) {

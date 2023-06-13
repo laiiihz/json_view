@@ -1,3 +1,7 @@
+## 0.5.0 - 2023-06-13
+### Changed
+- change minSDK version to 2.17
+
 ## 0.4.2 - 2023-06-13
 ### Changed
 - add crossAxisAlignment to jsonBody

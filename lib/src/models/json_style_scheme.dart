@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 
 /// JsonQuotation
 class JsonQuotation {
-  /// left quote
-  final String? leftQuote;
-
-  /// right quote
-  final String? rightQuote;
-
   /// Json Quotation
   ///
   /// [JsonQuotation.arrowQuote] arrow quotation `<some_key>`
@@ -21,6 +15,12 @@ class JsonQuotation {
     this.leftQuote,
     this.rightQuote,
   });
+
+  /// left quote
+  final String? leftQuote;
+
+  /// right quote
+  final String? rightQuote;
 
   /// left qoute and right qoute are same
   const JsonQuotation.same(String quote)

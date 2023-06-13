@@ -9,6 +9,26 @@ import 'map_tile.dart';
 import 'simple_tiles.dart';
 
 class JsonView extends StatelessWidget {
+  /// provider a json view, build with listview
+  ///
+  /// see more [JsonConfig] to customize the view
+  const JsonView({
+    super.key,
+    required this.json,
+    this.shrinkWrap = false,
+    this.padding,
+    this.physics,
+    this.controller,
+    this.arrow,
+    this.colorScheme,
+    this.styleScheme,
+    this.animation,
+    this.itemPadding,
+    this.animationDuration,
+    this.animationCurve,
+    this.gap,
+  });
+
   /// {@template json_view.json_view.json}
   /// a json object to be displayed
   ///
@@ -53,26 +73,6 @@ class JsonView extends StatelessWidget {
   /// {@macro json_view.json_config_data.JsonConfigData.gap}
   final int? gap;
 
-  /// provider a json view, build with listview
-  ///
-  /// see more [JsonConfig] to customize the view
-  const JsonView({
-    Key? key,
-    required this.json,
-    this.shrinkWrap = false,
-    this.padding,
-    this.physics,
-    this.controller,
-    this.arrow,
-    this.colorScheme,
-    this.styleScheme,
-    this.animation,
-    this.itemPadding,
-    this.animationDuration,
-    this.animationCurve,
-    this.gap,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     if (json is! Map && json is! List) {
@@ -110,7 +110,7 @@ class JsonView extends StatelessWidget {
 class JsonViewBody extends StatelessWidget {
   /// use with caution, it will cause performance issue when json root items is too large
   const JsonViewBody({
-    Key? key,
+    super.key,
     required this.json,
     this.colorScheme,
     this.styleScheme,
@@ -120,7 +120,7 @@ class JsonViewBody extends StatelessWidget {
     this.animationCurve,
     this.gap,
     this.crossAxisAlignment = CrossAxisAlignment.start,
-  }) : super(key: key);
+  });
 
   /// {@macro json_view.json_view.json}
   final dynamic json;

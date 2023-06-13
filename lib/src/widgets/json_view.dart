@@ -119,6 +119,7 @@ class JsonViewBody extends StatelessWidget {
     this.animationDuration,
     this.animationCurve,
     this.gap,
+    this.crossAxisAlignment = CrossAxisAlignment.start,
   }) : super(key: key);
 
   /// {@macro json_view.json_view.json}
@@ -145,6 +146,9 @@ class JsonViewBody extends StatelessWidget {
   /// {@macro json_view.json_config_data.JsonConfigData.gap}
   final int? gap;
 
+  /// crossAxisAlignment
+  final CrossAxisAlignment crossAxisAlignment;
+
   @override
   Widget build(BuildContext context) {
     if (json is! Map && json is! List) {
@@ -161,7 +165,10 @@ class JsonViewBody extends StatelessWidget {
         return getIndexedItem(index: 0, value: item);
       }).toList();
     }
-    return Column(children: items);
+    return Column(
+      crossAxisAlignment: crossAxisAlignment,
+      children: items,
+    );
   }
 }
 
